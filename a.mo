@@ -22,15 +22,17 @@ package gsl
           Library = "gslcblas");
       end destructor;
     end gsl_permutation;
-  record gsl_sf_result
-  Real val;
-  Real err;
-  end gsl_sf_result;
-  record gsl_sf_result_e10
-  Real val;
-  Real err;
-  Integer e10;
-  end gsl_sf_result_e10;
+
+    record gsl_sf_result
+      Real val;
+      Real err;
+    end gsl_sf_result;
+
+    record gsl_sf_result_e10
+      Real val;
+      Real err;
+      Integer e10;
+    end gsl_sf_result_e10;
   end data_types;
 
   package mathematical
@@ -367,10 +369,9 @@ package gsl
 
   package COMPLEX
     function gsl_complex_rect
-      input Real x ;
+      input Real x;
       input Real y;
       output Real z[2];
-      
     
       external "C" z = gsl_complex_rect(x, y) annotation(
         Library = "gsl",
@@ -416,519 +417,749 @@ package gsl
 
     /*gsl_ran_shuffle(r, p.data, N, sizeof(size_t))*/
   end Permutation;
+
   package Special_functions
-package chap_7_5_1
-function gsl_sf_bessel_J0
-  input Real x;
-  output Real y;
-  external "C" y=gsl_sf_bessel_J0(x) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_J0;
+    package chap_7_5_1
+      function gsl_sf_bessel_J0
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_J0(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_J0;
 
+      function gsl_sf_bessel_J0_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_J0_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_J0_e;
 
+      function gsl_sf_bessel_J1
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_J1(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_J1;
 
+      function gsl_sf_bessel_J1_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_J1_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_J1_e;
 
-function gsl_sf_bessel_J0_e
-  input Real x;
-  output gsl.data_types.gsl_sf_result result;
-  output Integer y;
-  external "C" y=gsl_sf_bessel_J0_e(x,result) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Include = "#include <gsl/gsl_sf_result.h>",
+      function gsl_sf_bessel_Jn
+        input Real x;
+        input Integer n;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Jn(n, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Jn;
+
+      function gsl_sf_bessel_Jn_e
+        input Real x;
+        input Integer n;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Jn_e(n, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Jn_e;
+
+      function gsl_sf_bessel_Jn_array
+        input Integer nmin;
+        input Integer nmax;
+        input Real x;
+        output Real result_array[nmax - nmin];
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Jn_array(nmin, nmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Jn_array;
+    end chap_7_5_1;
+
+    package chap_7_5_2
+      function gsl_sf_bessel_Y0
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Y0(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Y0;
+
+      function gsl_sf_bessel_Y0_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Y0_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Y0_e;
+
+      function gsl_sf_bessel_Y1
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Y1(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Y1;
+
+      function gsl_sf_bessel_Y1_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Y1_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Y1_e;
+
+      function gsl_sf_bessel_Yn
+        input Real x;
+        input Integer n;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Yn(n, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Yn;
+
+      function gsl_sf_bessel_Yn_e
+        input Real x;
+        input Integer n;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Yn_e(n, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Yn_e;
+
+      function gsl_sf_bessel_Yn_array
+        input Integer nmin;
+        input Integer nmax;
+        input Real x;
+        output Real result_array[nmax - nmin];
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Yn_array(nmin, nmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Yn_array;
+    end chap_7_5_2;
+
+    package chap_7_5_3
+      function gsl_sf_bessel_I0
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_I0(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_I0;
+
+      function gsl_sf_bessel_I0_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_I0_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_I0_e;
+
+      function gsl_sf_bessel_I1
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_I1(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_I1;
+
+      function gsl_sf_bessel_I1_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_I1_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_I1_e;
+
+      function gsl_sf_bessel_In
+        input Real x;
+        input Integer n;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_In(n, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_In;
+
+      function gsl_sf_bessel_In_e
+        input Real x;
+        input Integer n;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_In_e(n, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_In_e;
+
+      function gsl_sf_bessel_In_array
+        input Integer nmin;
+        input Integer nmax;
+        input Real x;
+        output Real result_array[nmax - nmin];
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_In_array(nmin, nmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_In_array;
+
+      function gsl_sf_bessel_I0_scaled
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_I0_scaled(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_I0_scaled;
+
+      function gsl_sf_bessel_I0_scaled_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_I0_scaled_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_I0_scaled_e;
+
+      function gsl_sf_bessel_I1_scaled
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_I1_scaled(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_I1_scaled;
+
+      function gsl_sf_bessel_I1_scaled_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_I1_scaled_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_I1_scaled_e;
+
+      function gsl_sf_bessel_In_scaled
+        input Real x;
+        input Integer n;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_In_scaled(n, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_In_scaled;
+
+      function gsl_sf_bessel_In_scaled_e
+        input Real x;
+        input Integer n;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_In_scaled_e(n, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_In_scaled_e;
+
+      function gsl_sf_bessel_In_scaled_array
+        input Integer nmin;
+        input Integer nmax;
+        input Real x;
+        output Real result_array[nmax - nmin];
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_In_scaled_array(nmin, nmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_In_scaled_array;
+    end chap_7_5_3;
+
+    package chap_7_5_4
+      function gsl_sf_bessel_K0
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_K0(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_K0;
+
+      function gsl_sf_bessel_K0_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_K0_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_K0_e;
+
+      function gsl_sf_bessel_K1
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_K1(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_K1;
+
+      function gsl_sf_bessel_K1_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_K1_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_K1_e;
+
+      function gsl_sf_bessel_Kn
+        input Real x;
+        input Integer n;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Kn(n, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Kn;
+
+      function gsl_sf_bessel_Kn_e
+        input Real x;
+        input Integer n;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Kn_e(n, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Kn_e;
+
+      function gsl_sf_bessel_Kn_array
+        input Integer nmin;
+        input Integer nmax;
+        input Real x;
+        output Real result_array[nmax - nmin];
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Kn_array(nmin, nmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Kn_array;
+
+      function gsl_sf_bessel_K0_scaled
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_K0_scaled(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_K0_scaled;
+
+      function gsl_sf_bessel_K0_scaled_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_K0_scaled_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_K0_scaled_e;
+
+      function gsl_sf_bessel_K1_scaled
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_K1_scaled(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_K1_scaled;
+
+      function gsl_sf_bessel_K1_scaled_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_K1_scaled_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_K1_scaled_e;
+
+      function gsl_sf_bessel_Kn_scaled
+        input Real x;
+        input Integer n;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Kn_scaled(n, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Kn_scaled;
+
+      function gsl_sf_bessel_Kn_scaled_e
+        input Real x;
+        input Integer n;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Kn_scaled_e(n, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Kn_scaled_e;
+
+      function gsl_sf_bessel_Kn_scaled_array
+        input Integer nmin;
+        input Integer nmax;
+        input Real x;
+        output Real result_array[nmax - nmin];
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Kn_scaled_array(nmin, nmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Kn_scaled_array;
+    end chap_7_5_4;
+
+    package chap_7_5_5
+      function gsl_sf_bessel_j0
+        //this function computes the regular spherical bessels function j0(x)=sin(x)/x
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_j0(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_j0;
+
+      function gsl_sf_bessel_j0_e
+        // This function computes spherical bessels zero order function j(x)=sin(x)/x
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_j0_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_j0_e;
+
+      function gsl_sf_bessel_j1
+        //This function computes the 1st order spherical bessels function j1(x)=(sin(x)/x-cos(x))/x
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_j1(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_j1;
+
+      function gsl_sf_bessel_j1_e
+        //This function computes the 1st order spherical bessels function j1(x)=(sin(x)/x-cos(x))/x
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_j1_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_j1_e;
+
+      function gsl_sf_bessel_j2
+        //This function computes the 2nd order regular spherical bessels function j 2 (x) = ((3/x 2 − 1) sin(x) −3 cos(x)/x)/x.
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_j2(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_j2;
+
+      function gsl_sf_bessel_j2_e
+        //This function computes the 2nd order regular spherical bessels function j 2 (x) = ((3/x 2 − 1) sin(x) −3 cos(x)/x)/x.
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_j2_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_j2_e;
+
+      function gsl_sf_bessel_jl
+  input Integer l;
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_jl(l, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_jl;
+
+      function gsl_sf_bessel_jl_e
+  input Integer l;
+        //order of the bessel function
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_jl_e(l, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_jl_e;
+
+      function gsl_sf_bessel_jl_array
+        // input Integer nmin;
+        input Integer lmax;
+        input Real x;
+        output Real result_array[lmax];
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_jl_array(lmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_jl_array;
+      
+      
+      function gsl_sf_bessel_jl_steed_array
+        // input Integer nmin;
+        input Integer lmax;
+        input Real x;
+        output Real result_array[lmax];
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_jl_steed_array(lmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_jl_steed_array;
+    end chap_7_5_5;
     
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_J0_e;
-
-function gsl_sf_bessel_J1
-  input Real x;
-  output Real y;
-  external "C" y=gsl_sf_bessel_J1(x) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_J1;
-
-
-function gsl_sf_bessel_J1_e
-  input Real x;
-  output gsl.data_types.gsl_sf_result result;
-  output Integer y;
-  external "C" y=gsl_sf_bessel_J1_e(x,result) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Include = "#include <gsl/gsl_sf_result.h>",
     
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_J1_e;
-
-
-function gsl_sf_bessel_Jn
-  input Real x;
-  input  Integer n;
-  output Real y;
-  external "C" y=gsl_sf_bessel_Jn(n,x) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Jn;
-
-function gsl_sf_bessel_Jn_e
-  input Real x;
-  input Integer n;
-  output gsl.data_types.gsl_sf_result result;
-  output Integer y;
-  external "C" y=gsl_sf_bessel_Jn_e(n,x,result) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Include = "#include <gsl/gsl_sf_result.h>",
     
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Jn_e;
-
-function gsl_sf_bessel_Jn_array
-  
-  input Integer nmin;
-  input Integer nmax;
-  input Real x;
-  output Real result_array[nmax-nmin];
-  output Integer y;
-  external "C" y=gsl_sf_bessel_Jn_array(nmin,nmax,x,result_array) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
     
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Jn_array;
-
-end chap_7_5_1;
-
-
-
-
-
-
-package chap_7_5_2
-
-function gsl_sf_bessel_Y0
-  input Real x;
-  output Real y;
-  external "C" y=gsl_sf_bessel_Y0(x) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Y0;
-
-
-
-
-function gsl_sf_bessel_Y0_e
-  input Real x;
-  output gsl.data_types.gsl_sf_result result;
-  output Integer y;
-  external "C" y=gsl_sf_bessel_Y0_e(x,result) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Include = "#include <gsl/gsl_sf_result.h>",
     
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Y0_e;
-
-function gsl_sf_bessel_Y1
-  input Real x;
-  output Real y;
-  external "C" y=gsl_sf_bessel_Y1(x) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Y1;
-
-
-function gsl_sf_bessel_Y1_e
-  input Real x;
-  output gsl.data_types.gsl_sf_result result;
-  output Integer y;
-  external "C" y=gsl_sf_bessel_Y1_e(x,result) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Include = "#include <gsl/gsl_sf_result.h>",
     
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Y1_e;
-
-
-function gsl_sf_bessel_Yn
-  input Real x;
-  input  Integer n;
-  output Real y;
-  external "C" y=gsl_sf_bessel_Yn(n,x) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Yn;
-
-function gsl_sf_bessel_Yn_e
-  input Real x;
-  input Integer n;
-  output gsl.data_types.gsl_sf_result result;
-  output Integer y;
-  external "C" y=gsl_sf_bessel_Yn_e(n,x,result) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Include = "#include <gsl/gsl_sf_result.h>",
     
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Yn_e;
-
-function gsl_sf_bessel_Yn_array
-  input Integer nmin;
-  input Integer nmax;
-  input Real x;
-  output Real result_array[nmax-nmin];
-  output Integer y;
-  external "C" y=gsl_sf_bessel_Yn_array(nmin,nmax,x,result_array) annotation(
-    Include = "#include <gsl/gsl_sf_bessel.h>",
-    Library = "gsl",
-    Library = "gslcblas");
-end gsl_sf_bessel_Yn_array;
-end chap_7_5_2;
-  
-  package chap_7_5_3
-  function gsl_sf_bessel_I0
-    input Real x;
-    output Real y;
-    external "C" y=gsl_sf_bessel_I0(x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_I0;
-  
-  
-  
-  
-  function gsl_sf_bessel_I0_e
-    input Real x;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_I0_e(x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+    package chap_7_5_6
+      function gsl_sf_bessel_y0
+        //this function computes the regular spherical bessels function y0(x)=sin(x)/x
+        input Real x;
+        output Real y;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_I0_e;
+        external "C" y = gsl_sf_bessel_y0(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_y0;
   
-  function gsl_sf_bessel_I1
-    input Real x;
-    output Real y;
-    external "C" y=gsl_sf_bessel_I1(x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_I1;
-  
-  
-  function gsl_sf_bessel_I1_e
-    input Real x;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_I1_e(x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+      function gsl_sf_bessel_y0_e
+        // This function computes spherical bessels zero order function j(x)=sin(x)/x
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_I1_e;
+        external "C" y = gsl_sf_bessel_y0_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_y0_e;
   
-  
-  function gsl_sf_bessel_In
-    input Real x;
-    input  Integer n;
-    output Real y;
-    external "C" y=gsl_sf_bessel_In(n,x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_In;
-  
-  function gsl_sf_bessel_In_e
-    input Real x;
-    input Integer n;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_In_e(n,x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+      function gsl_sf_bessel_y1
+        //This function computes the 1st order spherical bessels function y1(x)=(sin(x)/x-cos(x))/x
+        input Real x;
+        output Real y;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_In_e;
+        external "C" y = gsl_sf_bessel_y1(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_y1;
   
-  function gsl_sf_bessel_In_array
-    input Integer nmin;
-    input Integer nmax;
-    input Real x;
-    output Real result_array[nmax-nmin];
-    output Integer y;
-    external "C" y=gsl_sf_bessel_In_array(nmin,nmax,x,result_array) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_In_array;
-  
-  
-  function gsl_sf_bessel_I0_scaled
-    input Real x;
-    output Real y;
-    external "C" y=gsl_sf_bessel_I0_scaled(x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_I0_scaled;
-  
-  
-  
-  
-  function gsl_sf_bessel_I0_scaled_e
-    input Real x;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_I0_scaled_e(x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+      function gsl_sf_bessel_y1_e
+        //This function computes the 1st order spherical bessels function y1(x)=(sin(x)/x-cos(x))/x
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_I0_scaled_e;
+        external "C" y = gsl_sf_bessel_y1_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_y1_e;
   
-  function gsl_sf_bessel_I1_scaled
-    input Real x;
-    output Real y;
-    external "C" y=gsl_sf_bessel_I1_scaled(x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_I1_scaled;
-  
-  
-  function gsl_sf_bessel_I1_scaled_e
-    input Real x;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_I1_scaled_e(x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+      function gsl_sf_bessel_y2
+        //This function computes the 2nd order regular spherical bessels function j 2 (x) = ((3/x 2 − 1) sin(x) −3 cos(x)/x)/x.
+        input Real x;
+        output Real y;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_I1_scaled_e;
+        external "C" y = gsl_sf_bessel_y2(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_y2;
   
-  
-  function gsl_sf_bessel_In_scaled
-    input Real x;
-    input  Integer n;
-    output Real y;
-    external "C" y=gsl_sf_bessel_In_scaled(n,x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_In_scaled;
-  
-  function gsl_sf_bessel_In_scaled_e
-    input Real x;
-    input Integer n;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_In_scaled_e(n,x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+      function gsl_sf_bessel_y2_e
+        //This function computes the 2nd order regular spherical bessels function j 2 (x) = ((3/x 2 − 1) sin(x) −3 cos(x)/x)/x.
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_In_scaled_e;
+        external "C" y = gsl_sf_bessel_y2_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_y2_e;
   
-  function gsl_sf_bessel_In_scaled_array
-    input Integer nmin;
-    input Integer nmax;
-    input Real x;
-    output Real result_array[nmax-nmin];
-    output Integer y;
-    external "C" y=gsl_sf_bessel_In_scaled_array(nmin,nmax,x,result_array) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_In_scaled_array;
-  end chap_7_5_3;
-  package chap_7_5_4
-  function gsl_sf_bessel_K0
-    input Real x;
-    output Real y;
-    external "C" y=gsl_sf_bessel_K0(x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_K0;
-  
-  
-  
-  
-  function gsl_sf_bessel_K0_e
-    input Real x;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_K0_e(x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+      function gsl_sf_bessel_yl
+  input Integer l;
+        input Real x;
+        output Real y;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_K0_e;
+        external "C" y = gsl_sf_bessel_yl(l, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_yl;
   
-  function gsl_sf_bessel_K1
-    input Real x;
-    output Real y;
-    external "C" y=gsl_sf_bessel_K1(x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_K1;
-  
-  
-  function gsl_sf_bessel_K1_e
-    input Real x;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_K1_e(x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+      function gsl_sf_bessel_yl_e
+  input Integer l;
+        //order of the bessel function
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_K1_e;
+        external "C" y = gsl_sf_bessel_yl_e(l, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_yl_e;
   
-  
-  function gsl_sf_bessel_Kn
-    input Real x;
-    input  Integer n;
-    output Real y;
-    external "C" y=gsl_sf_bessel_Kn(n,x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_Kn;
-  
-  function gsl_sf_bessel_Kn_e
-    input Real x;
-    input Integer n;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_Kn_e(n,x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+      function gsl_sf_bessel_yl_array
+        // input Integer nmin;
+        input Integer lmax;
+        input Real x;
+        output Real result_array[lmax];
+        output Integer y;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_Kn_e;
-  
-  function gsl_sf_bessel_Kn_array
-    input Integer nmin;
-    input Integer nmax;
-    input Real x;
-    output Real result_array[nmax-nmin];
-    output Integer y;
-    external "C" y=gsl_sf_bessel_Kn_array(nmin,nmax,x,result_array) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_Kn_array;
-  
-  
-  function gsl_sf_bessel_K0_scaled
-    input Real x;
-    output Real y;
-    external "C" y=gsl_sf_bessel_K0_scaled(x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_K0_scaled;
-  
-  
-  
-  
-  function gsl_sf_bessel_K0_scaled_e
-    input Real x;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_K0_scaled_e(x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
+        external "C" y = gsl_sf_bessel_yl_array(lmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_yl_array;
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_K0_scaled_e;
-  
-  function gsl_sf_bessel_K1_scaled
-    input Real x;
-    output Real y;
-    external "C" y=gsl_sf_bessel_K1_scaled(x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_K1_scaled;
-  
-  
-  function gsl_sf_bessel_K1_scaled_e
-    input Real x;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_K1_scaled_e(x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
       
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_K1_scaled_e;
-  
-  
-  function gsl_sf_bessel_Kn_scaled
-    input Real x;
-    input  Integer n;
-    output Real y;
-    external "C" y=gsl_sf_bessel_Kn_scaled(n,x) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_Kn_scaled;
-  
-  function gsl_sf_bessel_Kn_scaled_e
-    input Real x;
-    input Integer n;
-    output gsl.data_types.gsl_sf_result result;
-    output Integer y;
-    external "C" y=gsl_sf_bessel_Kn_scaled_e(n,x,result) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Include = "#include <gsl/gsl_sf_result.h>",
-      
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_Kn_scaled_e;
-  
-  function gsl_sf_bessel_Kn_scaled_array
-    input Integer nmin;
-    input Integer nmax;
-    input Real x;
-    output Real result_array[nmax-nmin];
-    output Integer y;
-    external "C" y=gsl_sf_bessel_Kn_scaled_array(nmin,nmax,x,result_array) annotation(
-      Include = "#include <gsl/gsl_sf_bessel.h>",
-      Library = "gsl",
-      Library = "gslcblas");
-  end gsl_sf_bessel_Kn_scaled_array;
-  
-  end chap_7_5_4;
-end Special_functions;
-  
+    
+    end chap_7_5_6;
+  end Special_functions;
 
   package Examples
     package Mathematical
@@ -1208,416 +1439,538 @@ end Special_functions;
         /*this model calls the function gsl_complex_rect*/
         parameter Real a = 10;
         parameter Real b = 4;
-      Real z[2];
+        Real z[2];
       algorithm
-      z:= gsl.COMPLEX.gsl_complex_rect(a, b);
+        z := gsl.COMPLEX.gsl_complex_rect(a, b);
       end gsl_complex_rect;
     end COMPLEX;
-    
+
     package special_functions
-    package chap_7_5_1
-    model gsl_sf_bessel_J0
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_J0(x);
-    end gsl_sf_bessel_J0; 
     
-    
-    
-    model gsl_sf_bessel_J0_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_J0_e(x);
-    end gsl_sf_bessel_J0_e;
-    
-    
-    model gsl_sf_bessel_J1
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_J1(x);
-    end gsl_sf_bessel_J1; 
-    
-    
-    model gsl_sf_bessel_J1_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_J1_e(x);
-    end gsl_sf_bessel_J1_e;
-    
-    
-    model gsl_sf_bessel_Jn
-    parameter Real x=10;
-    parameter Integer n=1;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_Jn(x,n);
-    end gsl_sf_bessel_Jn;
- 
-    model gsl_sf_bessel_Jn_e
-    parameter Real x=10;
-    parameter Integer n=1;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_Jn_e(x,n);
-    end gsl_sf_bessel_Jn_e;
-    
-    model gsl_sf_bessel_Jn_array
-    parameter Integer nmin=2;
-    parameter Integer nmax=10;
-    parameter Real x=4;
-    Real result_array[nmax-nmin];
-    Integer y;
-    algorithm
-    (result_array,y):=gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_Jn_array(nmin,nmax,x);
-    end gsl_sf_bessel_Jn_array;
-    end chap_7_5_1;
- 
-    
-    
-    package chap_7_5_2
-    
-    
-    model gsl_sf_bessel_Y0
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Y0(x);
-    end gsl_sf_bessel_Y0; 
-    
-    
-    
-    model gsl_sf_bessel_Y0_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Y0_e(x);
-    end gsl_sf_bessel_Y0_e;
-    
-    
-    model gsl_sf_bessel_Y1
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Y1(x);
-    end gsl_sf_bessel_Y1; 
-    
-    
-    model gsl_sf_bessel_Y1_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Y1_e(x);
-    end gsl_sf_bessel_Y1_e;
-    
-    
-    model gsl_sf_bessel_Yn
-    parameter Real x=10;
-    parameter Integer n=1;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Yn(x,n);
-    end gsl_sf_bessel_Yn;
-    
-    model gsl_sf_bessel_Yn_e
-    parameter Real x=10;
-    parameter Integer n=1;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Yn_e(x,n);
-    end gsl_sf_bessel_Yn_e;
-    
-    model gsl_sf_bessel_Yn_array
-    parameter Integer nmin=2;
-    parameter Integer nmax=10;
-    parameter Real x=4;
-    Real result_array[nmax-nmin];
-    Integer y;
-    algorithm
-    (result_array,y):=gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Yn_array(nmin,nmax,x);
-    end gsl_sf_bessel_Yn_array;
-    end chap_7_5_2;
-    package chap_7_5_3
-    
-    
-    model gsl_sf_bessel_I0
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I0(x);
-    end gsl_sf_bessel_I0; 
-    
-    
-    
-    model gsl_sf_bessel_I0_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I0_e(x);
-    end gsl_sf_bessel_I0_e;
-    
-    
-    model gsl_sf_bessel_I1
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I1(x);
-    end gsl_sf_bessel_I1; 
-    
-    
-    model gsl_sf_bessel_I1_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I1_e(x);
-    end gsl_sf_bessel_I1_e;
-    
-    
-    model gsl_sf_bessel_In
-    parameter Real x=10;
-    parameter Integer n=1;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In(x,n);
-    end gsl_sf_bessel_In;
-    
-    model gsl_sf_bessel_In_e
-    parameter Real x=10;
-    parameter Integer n=1;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_e(x,n);
-    end gsl_sf_bessel_In_e;
-    
-    model gsl_sf_bessel_In_array
-    parameter Integer nmin=2;
-    parameter Integer nmax=10;
-    parameter Real x=4;
-    Real result_array[nmax-nmin];
-    Integer y;
-    algorithm
-    (result_array,y):=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_array(nmin,nmax,x);
-    end gsl_sf_bessel_In_array;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    model gsl_sf_bessel_I0_scaled
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I0_scaled(x);
-    end gsl_sf_bessel_I0_scaled; 
-    
-    
-    
-    model gsl_sf_bessel_I0_scaled_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I0_scaled_e(x);
-    end gsl_sf_bessel_I0_scaled_e;
-    
-    
-    model gsl_sf_bessel_I1_scaled
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I1_scaled(x);
-    end gsl_sf_bessel_I1_scaled; 
-    
-    
-    model gsl_sf_bessel_I1_scaled_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I1_scaled_e(x);
-    end gsl_sf_bessel_I1_scaled_e;
-    
-    
-    model gsl_sf_bessel_In_scaled
-    parameter Real x=10;
-    parameter Integer n=1;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_scaled(x,n);
-    end gsl_sf_bessel_In_scaled;
-    
-    model gsl_sf_bessel_In_scaled_e
-    parameter Real x=10;
-    parameter Integer n=1;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_scaled_e(x,n);
-    end gsl_sf_bessel_In_scaled_e;
-    
-    model gsl_sf_bessel_In_scaled_array
-    parameter Integer nmin=2;
-    parameter Integer nmax=10;
-    parameter Real x=4;
-    Real result_array[nmax-nmin];
-    Integer y;
-    algorithm
-    (result_array,y):=gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_scaled_array(nmin,nmax,x);
-    end gsl_sf_bessel_In_scaled_array;
-    
-    end chap_7_5_3;
-    package chap_7_5_4
-    model gsl_sf_bessel_K0
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K0(x);
-    end gsl_sf_bessel_K0; 
-    
-    
-    
-    model gsl_sf_bessel_K0_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K0_e(x);
-    end gsl_sf_bessel_K0_e;
-    
-    
-    model gsl_sf_bessel_K1
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K1(x);
-    end gsl_sf_bessel_K1; 
-    
-    
-    model gsl_sf_bessel_K1_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K1_e(x);
-    end gsl_sf_bessel_K1_e;
-    
-    
-    model gsl_sf_bessel_Kn
-    parameter Real x=10;
-    parameter Integer n=1;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn(x,n);
-    end gsl_sf_bessel_Kn;
-    
-    model gsl_sf_bessel_Kn_e
-    parameter Real x=10;
-    parameter Integer n=1;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_e(x,n);
-    end gsl_sf_bessel_Kn_e;
-    
-    model gsl_sf_bessel_Kn_array
-    parameter Integer nmin=2;
-    parameter Integer nmax=10;
-    parameter Real x=4;
-    Real result_array[nmax-nmin];
-    Integer y;
-    algorithm
-    (result_array,y):=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_array(nmin,nmax,x);
-    end gsl_sf_bessel_Kn_array;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    model gsl_sf_bessel_K0_scaled
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K0_scaled(x);
-    end gsl_sf_bessel_K0_scaled; 
-    
-    
-    
-    model gsl_sf_bessel_K0_scaled_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K0_scaled_e(x);
-    end gsl_sf_bessel_K0_scaled_e;
-    
-    
-    model gsl_sf_bessel_K1_scaled
-    parameter Real x=10;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K1_scaled(x);
-    end gsl_sf_bessel_K1_scaled; 
-    
-    
-    model gsl_sf_bessel_K1_scaled_e
-    parameter Real x=10;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K1_scaled_e(x);
-    end gsl_sf_bessel_K1_scaled_e;
-    
-    
-    model gsl_sf_bessel_Kn_scaled
-    parameter Real x=10;
-    parameter Integer n=1;
-    Real y(start=1);
-    algorithm
-    y:=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_scaled(x,n);
-    end gsl_sf_bessel_Kn_scaled;
-    
-    model gsl_sf_bessel_Kn_scaled_e
-    parameter Real x=10;
-    parameter Integer n=1;
-    gsl.data_types.gsl_sf_result result;
-    Integer y;
-    algorithm
-    (result,y):=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_scaled_e(x,n);
-    end gsl_sf_bessel_Kn_scaled_e;
-    
-    model gsl_sf_bessel_Kn_scaled_array
-    parameter Integer nmin=2;
-    parameter Integer nmax=10;
-    parameter Real x=4;
-    Real result_array[nmax-nmin];
-    Integer y;
-    algorithm
-    (result_array,y):=gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_scaled_array(nmin,nmax,x);
-    end gsl_sf_bessel_Kn_scaled_array;
-    
-    end chap_7_5_4;
+      package chap_7_5_1
+        model gsl_sf_bessel_J0
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_J0(x);
+        end gsl_sf_bessel_J0;
+
+        model gsl_sf_bessel_J0_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_J0_e(x);
+        end gsl_sf_bessel_J0_e;
+
+        model gsl_sf_bessel_J1
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_J1(x);
+        end gsl_sf_bessel_J1;
+
+        model gsl_sf_bessel_J1_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_J1_e(x);
+        end gsl_sf_bessel_J1_e;
+
+        model gsl_sf_bessel_Jn
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_Jn(x, n);
+        end gsl_sf_bessel_Jn;
+
+        model gsl_sf_bessel_Jn_e
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_Jn_e(x, n);
+        end gsl_sf_bessel_Jn_e;
+
+        model gsl_sf_bessel_Jn_array
+          parameter Integer nmin = 2;
+          parameter Integer nmax = 10;
+          parameter Real x = 4;
+          Real result_array[nmax - nmin];
+          Integer y;
+        algorithm
+          (result_array, y) := gsl.Special_functions.chap_7_5_1.gsl_sf_bessel_Jn_array(nmin, nmax, x);
+        end gsl_sf_bessel_Jn_array;
+      end chap_7_5_1;
+
+      package chap_7_5_2
+        model gsl_sf_bessel_Y0
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Y0(x);
+        end gsl_sf_bessel_Y0;
+
+        model gsl_sf_bessel_Y0_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Y0_e(x);
+        end gsl_sf_bessel_Y0_e;
+
+        model gsl_sf_bessel_Y1
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Y1(x);
+        end gsl_sf_bessel_Y1;
+
+        model gsl_sf_bessel_Y1_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Y1_e(x);
+        end gsl_sf_bessel_Y1_e;
+
+        model gsl_sf_bessel_Yn
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Yn(x, n);
+        end gsl_sf_bessel_Yn;
+
+        model gsl_sf_bessel_Yn_e
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Yn_e(x, n);
+        end gsl_sf_bessel_Yn_e;
+
+        model gsl_sf_bessel_Yn_array
+          parameter Integer nmin = 2;
+          parameter Integer nmax = 10;
+          parameter Real x = 4;
+          Real result_array[nmax - nmin];
+          Integer y;
+        algorithm
+          (result_array, y) := gsl.Special_functions.chap_7_5_2.gsl_sf_bessel_Yn_array(nmin, nmax, x);
+        end gsl_sf_bessel_Yn_array;
+      end chap_7_5_2;
+
+      package chap_7_5_3
+        model gsl_sf_bessel_I0
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I0(x);
+        end gsl_sf_bessel_I0;
+
+        model gsl_sf_bessel_I0_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I0_e(x);
+        end gsl_sf_bessel_I0_e;
+
+        model gsl_sf_bessel_I1
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I1(x);
+        end gsl_sf_bessel_I1;
+
+        model gsl_sf_bessel_I1_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I1_e(x);
+        end gsl_sf_bessel_I1_e;
+
+        model gsl_sf_bessel_In
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In(x, n);
+        end gsl_sf_bessel_In;
+
+        model gsl_sf_bessel_In_e
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_e(x, n);
+        end gsl_sf_bessel_In_e;
+
+        model gsl_sf_bessel_In_array
+          parameter Integer nmin = 2;
+          parameter Integer nmax = 10;
+          parameter Real x = 4;
+          Real result_array[nmax - nmin];
+          Integer y;
+        algorithm
+          (result_array, y) := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_array(nmin, nmax, x);
+        end gsl_sf_bessel_In_array;
+
+        model gsl_sf_bessel_I0_scaled
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I0_scaled(x);
+        end gsl_sf_bessel_I0_scaled;
+
+        model gsl_sf_bessel_I0_scaled_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I0_scaled_e(x);
+        end gsl_sf_bessel_I0_scaled_e;
+
+        model gsl_sf_bessel_I1_scaled
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I1_scaled(x);
+        end gsl_sf_bessel_I1_scaled;
+
+        model gsl_sf_bessel_I1_scaled_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_I1_scaled_e(x);
+        end gsl_sf_bessel_I1_scaled_e;
+
+        model gsl_sf_bessel_In_scaled
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_scaled(x, n);
+        end gsl_sf_bessel_In_scaled;
+
+        model gsl_sf_bessel_In_scaled_e
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_scaled_e(x, n);
+        end gsl_sf_bessel_In_scaled_e;
+
+        model gsl_sf_bessel_In_scaled_array
+          parameter Integer nmin = 2;
+          parameter Integer nmax = 10;
+          parameter Real x = 4;
+          Real result_array[nmax - nmin];
+          Integer y;
+        algorithm
+          (result_array, y) := gsl.Special_functions.chap_7_5_3.gsl_sf_bessel_In_scaled_array(nmin, nmax, x);
+        end gsl_sf_bessel_In_scaled_array;
+      end chap_7_5_3;
+
+      package chap_7_5_4
+        model gsl_sf_bessel_K0
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K0(x);
+        end gsl_sf_bessel_K0;
+
+        model gsl_sf_bessel_K0_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K0_e(x);
+        end gsl_sf_bessel_K0_e;
+
+        model gsl_sf_bessel_K1
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K1(x);
+        end gsl_sf_bessel_K1;
+
+        model gsl_sf_bessel_K1_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K1_e(x);
+        end gsl_sf_bessel_K1_e;
+
+        model gsl_sf_bessel_Kn
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn(x, n);
+        end gsl_sf_bessel_Kn;
+
+        model gsl_sf_bessel_Kn_e
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_e(x, n);
+        end gsl_sf_bessel_Kn_e;
+
+        model gsl_sf_bessel_Kn_array
+          parameter Integer nmin = 2;
+          parameter Integer nmax = 10;
+          parameter Real x = 4;
+          Real result_array[nmax - nmin];
+          Integer y;
+        algorithm
+          (result_array, y) := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_array(nmin, nmax, x);
+        end gsl_sf_bessel_Kn_array;
+
+        model gsl_sf_bessel_K0_scaled
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K0_scaled(x);
+        end gsl_sf_bessel_K0_scaled;
+
+        model gsl_sf_bessel_K0_scaled_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K0_scaled_e(x);
+        end gsl_sf_bessel_K0_scaled_e;
+
+        model gsl_sf_bessel_K1_scaled
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K1_scaled(x);
+        end gsl_sf_bessel_K1_scaled;
+
+        model gsl_sf_bessel_K1_scaled_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_K1_scaled_e(x);
+        end gsl_sf_bessel_K1_scaled_e;
+
+        model gsl_sf_bessel_Kn_scaled
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_scaled(x, n);
+        end gsl_sf_bessel_Kn_scaled;
+
+        model gsl_sf_bessel_Kn_scaled_e
+          parameter Real x = 10;
+          parameter Integer n = 1;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_scaled_e(x, n);
+        end gsl_sf_bessel_Kn_scaled_e;
+
+        model gsl_sf_bessel_Kn_scaled_array
+          parameter Integer nmin = 2;
+          parameter Integer nmax = 10;
+          parameter Real x = 4;
+          Real result_array[nmax - nmin];
+          Integer y;
+        algorithm
+          (result_array, y) := gsl.Special_functions.chap_7_5_4.gsl_sf_bessel_Kn_scaled_array(nmin, nmax, x);
+        end gsl_sf_bessel_Kn_scaled_array;
+      end chap_7_5_4;
+
+      package chap_7_5_5
+        model gsl_sf_bessel_j0
+          //This model calls the function gsl_sf_bessel_j0 to calculate the value of spherical bessel function j0(x)=sin(x)/x
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j0(x);
+        end gsl_sf_bessel_j0;
+
+        model gsl_sf_bessel_j0_e
+          //This model calls the function gsl_sf_bessel_j0 to calculate the value of spherical bessel function j0(x)=sin(x)/x
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j0_e(x);
+        end gsl_sf_bessel_j0_e;
+
+        model gsl_sf_bessel_j1
+          //This model calls the function gsl_sf_bessel_j1 to calculate the value of spherical bessel function j1(x)=(sin(x)/x - cos(x))/x
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j1(x);
+        end gsl_sf_bessel_j1;
+
+        model gsl_sf_bessel_j1_e
+          //This model calls the function gsl_sf_bessel_j1 to calculate the value of spherical bessel function j1(x)=(sin(x)/x -cos(x))/x
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j1_e(x);
+        end gsl_sf_bessel_j1_e;
+
+        model gsl_sf_bessel_j2
+          //These routines compute the regular spherical Bessel function of second order, j 2 (x) = ((3/x 2 − 1) sin(x) −3 cos(x)/x)/x
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j2(x);
+        end gsl_sf_bessel_j2;
+
+        model gsl_sf_bessel_j2_e
+          //These routines compute the regular spherical Bessel function of second order, j 2 (x) = ((3/x 2 − 1) sin(x) −3 cos(x)/x)/x
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j2_e(x);
+        end gsl_sf_bessel_j2_e;
+
+        model gsl_sf_bessel_jl
+          //These routines compute the regular spherical Bessel function of order l, j1(x), for l ≥ 0 and x ≥ 0.
+          parameter Integer l = 10;
+          parameter Real x = 10;
+          Real y;
+        algorithm
+          y := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_jl(l, x);
+        end gsl_sf_bessel_jl;
+        
+        model gsl_sf_bessel_jl_e
+        parameter Integer l=10;
+        parameter Real x=10;
+        gsl.data_types.gsl_sf_result result;
+        Integer y;
+        algorithm
+        (result,y):=gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_jl_e(l,x);
+        end gsl_sf_bessel_jl_e;
+        
+        model gsl_sf_bessel_jl_array
+          // input Integer nmin;
+          parameter Integer lmax=10;
+           parameter Real x=10;
+           Real result_array[lmax];
+           Integer y;
+           algorithm
+        (result_array,y) := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_jl_array(lmax, x);
+        end gsl_sf_bessel_jl_array;
+        
+        
+        model gsl_sf_bessel_jl_steed_array
+          // input Integer nmin;
+          parameter Integer lmax=10;
+           parameter Real x=10;
+           Real result_array[lmax];
+           Integer y;
+           algorithm
+        (result_array,y) := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_jl_steed_array(lmax, x);
+        end gsl_sf_bessel_jl_steed_array;
+      end chap_7_5_5;
+      
+      
+      package chap_7_5_6
+        model gsl_sf_bessel_j0
+          //This model calls the function gsl_sf_bessel_j0 to calculate the value of irregular spherical irregular spherical bessel function j0(x)=sin(x)/x
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j0(x);
+        end gsl_sf_bessel_j0;
+    
+        model gsl_sf_bessel_j0_e
+          //This model calls the function gsl_sf_bessel_j0 to calculate the value of irregular spherical bessel function j0(x)=sin(x)/x
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j0_e(x);
+        end gsl_sf_bessel_j0_e;
+    
+        model gsl_sf_bessel_j1
+          //This model calls the function gsl_sf_bessel_j1 to calculate the value of irregular spherical bessel function j1(x)=(sin(x)/x - cos(x))/x
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j1(x);
+        end gsl_sf_bessel_j1;
+    
+        model gsl_sf_bessel_j1_e
+          //This model calls the function gsl_sf_bessel_j1 to calculate the value of irregular spherical bessel function j1(x)=(sin(x)/x -cos(x))/x
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j1_e(x);
+        end gsl_sf_bessel_j1_e;
+    
+        model gsl_sf_bessel_j2
+          //These routines compute the regular irregular spherical Bessel function of second order, j 2 (x) = ((3/x 2 − 1) sin(x) −3 cos(x)/x)/x
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j2(x);
+        end gsl_sf_bessel_j2;
+    
+        model gsl_sf_bessel_j2_e
+          //These routines compute the irregular spherical Bessel function of second order, j 2 (x) = ((3/x 2 − 1) sin(x) −3 cos(x)/x)/x
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_j2_e(x);
+        end gsl_sf_bessel_j2_e;
+    
+        model gsl_sf_bessel_jl
+          //These routines compute the  irregular spherical Bessel function of order l, j1(x), for l ≥ 0 and x ≥ 0.
+          parameter Integer l = 10;
+          parameter Real x = 10;
+          Real y;
+        algorithm
+          y := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_jl(l, x);
+        end gsl_sf_bessel_jl;
+        
+        model gsl_sf_bessel_jl_e
+        parameter Integer l=10;
+        parameter Real x=10;
+        gsl.data_types.gsl_sf_result result;
+        Integer y;
+        algorithm
+        (result,y):=gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_jl_e(l,x);
+        end gsl_sf_bessel_jl_e;
+        
+        model gsl_sf_bessel_jl_array
+          // input Integer nmin;
+          parameter Integer lmax=10;
+           parameter Real x=10;
+           Real result_array[lmax];
+           Integer y;
+           algorithm
+        (result_array,y) := gsl.Special_functions.chap_7_5_5.gsl_sf_bessel_jl_array(lmax, x);
+        end gsl_sf_bessel_jl_array;
+        
+      end chap_7_5_6;
     end special_functions;
   end Examples;
 end gsl;
