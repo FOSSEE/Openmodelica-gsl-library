@@ -1272,6 +1272,120 @@ package gsl
       end gsl_sf_bessel_il_scaled_array;
     
     end chap_7_5_7;
+    package chap_7_5_8
+    
+    
+    function gsl_sf_bessel_k0_scaled
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_k0_scaled(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_k0_scaled;
+    
+      function gsl_sf_bessel_k0_scaled_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_k0_scaled_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_k0_scaled_e;
+    
+      function gsl_sf_bessel_k1_scaled
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_k1_scaled(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_k1_scaled;
+    
+      function gsl_sf_bessel_k1_scaled_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_k1_scaled_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_k1_scaled_e;
+      
+      
+      
+      
+     function gsl_sf_bessel_k2_scaled
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_k2_scaled(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_k2_scaled; 
+      
+      
+      
+      
+      
+      
+      function gsl_sf_bessel_k2_scaled_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_k2_scaled_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_k2_scaled_e;
+    
+      function gsl_sf_bessel_kl_scaled
+        input Real x;
+        input Integer l;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_kl_scaled(l, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_kl_scaled;
+    
+      function gsl_sf_bessel_kl_scaled_e
+        input Real x;
+        input Integer n;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_kl_scaled_e(n, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_kl_scaled_e;
+    
+      function gsl_sf_bessel_kl_scaled_array
+        input Integer lmax;
+        input Real x;
+        output Real result_array[lmax];
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_kl_scaled_array( lmax, x, result_array) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_kl_scaled_array;
+    
+    end chap_7_5_8;
   end Special_functions;
 
   package Examples
@@ -2155,6 +2269,77 @@ package gsl
           (result_array, y) := gsl.Special_functions.chap_7_5_7.gsl_sf_bessel_il_scaled_array(lmax, x);
         end gsl_sf_bessel_il_scaled_array;
       end chap_7_5_7;
+      package chap_7_5_8
+      model gsl_sf_bessel_k0_scaled
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_k0_scaled(x);
+        end gsl_sf_bessel_k0_scaled;
+      
+        model gsl_sf_bessel_k0_scaled_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_k0_scaled_e(x);
+        end gsl_sf_bessel_k0_scaled_e;
+      
+        model gsl_sf_bessel_k1_scaled
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_k1_scaled(x);
+        end gsl_sf_bessel_k1_scaled;
+      
+        model gsl_sf_bessel_k1_scaled_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_k1_scaled_e(x);
+        end gsl_sf_bessel_k1_scaled_e;
+        model gsl_sf_bessel_k2_scaled
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_k2_scaled(x);
+        end gsl_sf_bessel_k2_scaled;
+      
+        model gsl_sf_bessel_k2_scaled_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_k2_scaled_e(x);
+        end gsl_sf_bessel_k2_scaled_e;
+      
+        model gsl_sf_bessel_kl_scaled
+      parameter Real x = 10;
+          parameter Integer l = 1;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_kl_scaled(x, l);
+        end gsl_sf_bessel_kl_scaled;
+      
+        model gsl_sf_bessel_kl_scaled_e
+      parameter Real x = 10;
+          parameter Integer l = 1;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_kl_scaled_e(x, l);
+        end gsl_sf_bessel_kl_scaled_e;
+      
+        model gsl_sf_bessel_kl_scaled_array
+      parameter Integer lmax = 10;
+          parameter Real x = 4;
+          Real result_array[lmax];
+          Integer y;
+        algorithm
+          (result_array, y) := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_kl_scaled_array(lmax, x);
+        end gsl_sf_bessel_kl_scaled_array;
+      end chap_7_5_8;
     end special_functions;
   end Examples;
 end gsl;
