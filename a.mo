@@ -1386,6 +1386,73 @@ package gsl
       end gsl_sf_bessel_kl_scaled_array;
     
     end chap_7_5_8;
+    
+    
+    package chap_7_5_9
+    function gsl_sf_bessel_Jnu
+        input Real x;
+        input Real nu;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Jnu(nu, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Jnu;
+      
+      
+      function gsl_sf_bessel_Jnu_e
+        input Real x;
+        input Real nu;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Jnu_e(nu, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Jnu_e;
+    end chap_7_5_9;
+    
+    
+    
+    package chap_7_5_10
+    
+    
+    function gsl_sf_bessel_Ynu
+        input Real x;
+        input Real nu;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Ynu(nu, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Ynu;
+      
+      
+      function gsl_sf_bessel_Ynu_e
+        input Real x;
+        input Real nu;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Ynu_e(nu, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Ynu_e;
+    end chap_7_5_10;
+    package chap_7_5_11
+    end chap_7_5_11;
+    package chap_7_5_12
+    end chap_7_5_12;
+    package chap_7_5_13
+    end chap_7_5_13;
+    
+    
   end Special_functions;
 
   package Examples
@@ -2340,6 +2407,56 @@ package gsl
           (result_array, y) := gsl.Special_functions.chap_7_5_8.gsl_sf_bessel_kl_scaled_array(lmax, x);
         end gsl_sf_bessel_kl_scaled_array;
       end chap_7_5_8;
+      
+      
+      package chap_7_5_9
+       model gsl_sf_bessel_Jnu
+      parameter Real x = 10;
+          parameter Real nu = 1.5;
+          Real y;
+        algorithm
+          y := gsl.Special_functions.chap_7_5_9.gsl_sf_bessel_Jnu(nu, x);
+        end gsl_sf_bessel_Jnu;
+        
+        
+         model gsl_sf_bessel_Jnu_e
+          parameter Real x=10;
+          parameter Real nu=1.5;
+          gsl.data_types.gsl_sf_result result;
+           Integer y;
+        
+          algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_9.gsl_sf_bessel_Jnu_e(x, nu);
+        end gsl_sf_bessel_Jnu_e;
+      end chap_7_5_9;
+      package chap_7_5_10
+      
+      
+      model gsl_sf_bessel_Ynu
+      parameter Real x = 10;
+          parameter Real nu = 1.5;
+          Real y;
+        algorithm
+          y := gsl.Special_functions.chap_7_5_10.gsl_sf_bessel_Ynu(nu, x);
+        end gsl_sf_bessel_Ynu;
+        
+        
+         model gsl_sf_bessel_Ynu_e
+          parameter Real x=10;
+          parameter Real nu=1.5;
+          gsl.data_types.gsl_sf_result result;
+           Integer y;
+        
+          algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_10.gsl_sf_bessel_Ynu_e(x, nu);
+        end gsl_sf_bessel_Ynu_e;
+      end chap_7_5_10;
+      package chap_7_5_11
+      end chap_7_5_11;
+      package chap_7_5_12
+      end chap_7_5_12;
+      package chap_7_5_13
+      end chap_7_5_13;
     end special_functions;
   end Examples;
 end gsl;
