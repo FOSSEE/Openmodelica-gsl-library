@@ -1446,8 +1446,133 @@ package gsl
       end gsl_sf_bessel_Ynu_e;
     end chap_7_5_10;
     package chap_7_5_11
+    function gsl_sf_bessel_Inu
+        input Real x;
+        input Real nu;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Inu(nu, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Inu;
+      
+      
+      function gsl_sf_bessel_Inu_e
+        input Real x;
+        input Real nu;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Inu_e(nu, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Inu_e;
+      
+      function gsl_sf_bessel_Inu_scaled
+        input Real x;
+        input Real nu;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Inu_scaled(nu, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Inu_scaled;
+    
+      function gsl_sf_bessel_Inu_scaled_e
+        input Real x;
+        input Real nu;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Inu_scaled_e(nu, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Inu_scaled_e;
     end chap_7_5_11;
     package chap_7_5_12
+    //Irregular modified bessels function
+    function gsl_sf_bessel_Knu
+        input Real x;
+        input Real nu;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Knu(nu, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Knu;
+      
+      
+      function gsl_sf_bessel_Knu_e
+        input Real x;
+        input Real nu;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Knu_e(nu, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Knu_e;
+      
+      //Irregular modified bessels function
+    function gsl_sf_bessel_lnKnu
+        input Real x;
+        input Real nu;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_lnKnu(nu, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_lnKnu;
+      
+      
+      function gsl_sf_bessel_lnKnu_e
+        input Real x;
+        input Real nu;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_lnKnu_e(nu, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_lnKnu_e;
+      
+      
+       function gsl_sf_bessel_Knu_scaled
+        input Real x;
+        input Real nu;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_Knu_scaled(nu, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Knu_scaled;
+    
+      function gsl_sf_bessel_Knu_scaled_e
+        input Real x;
+        input Real nu;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_Knu_scaled_e(nu, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_Knu_scaled_e;
+      
     end chap_7_5_12;
     package chap_7_5_13
     end chap_7_5_13;
@@ -2452,8 +2577,101 @@ package gsl
         end gsl_sf_bessel_Ynu_e;
       end chap_7_5_10;
       package chap_7_5_11
+      model gsl_sf_bessel_Inu
+      parameter Real x = 10;
+          parameter Real nu = 1.5;
+          Real y;
+        algorithm
+          y := gsl.Special_functions.chap_7_5_11.gsl_sf_bessel_Inu(nu, x);
+        end gsl_sf_bessel_Inu;
+        
+        
+         model gsl_sf_bessel_Inu_e
+          parameter Real x=10;
+          parameter Real nu=1.5;
+          gsl.data_types.gsl_sf_result result;
+           Integer y;
+        
+          algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_11.gsl_sf_bessel_Inu_e(x, nu);
+        end gsl_sf_bessel_Inu_e;
+        
+        
+        
+         model gsl_sf_bessel_Inu_scaled
+      parameter Real x = 10;
+          parameter Real nu = 1.5;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_11.gsl_sf_bessel_Inu_scaled(x, nu);
+        end gsl_sf_bessel_Inu_scaled;
+      
+        model gsl_sf_bessel_Inu_scaled_e
+      parameter Real x = 10;
+          parameter Real nu = 1.5;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_11.gsl_sf_bessel_Inu_scaled_e(x, nu);
+        end gsl_sf_bessel_Inu_scaled_e;
       end chap_7_5_11;
       package chap_7_5_12
+      model gsl_sf_bessel_Knu
+      parameter Real x = 10;
+          parameter Real nu = 1.5;
+          Real y;
+        algorithm
+          y := gsl.Special_functions.chap_7_5_12.gsl_sf_bessel_Knu(nu, x);
+        end gsl_sf_bessel_Knu;
+        
+        
+         model gsl_sf_bessel_Knu_e
+          parameter Real x=10;
+          parameter Real nu=1.5;
+          gsl.data_types.gsl_sf_result result;
+           Integer y;
+        
+          algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_12.gsl_sf_bessel_Knu_e(x, nu);
+        end gsl_sf_bessel_Knu_e;
+        
+        model gsl_sf_bessel_lnKnu
+      parameter Real x = 10;
+          parameter Real nu = 1.5;
+          Real y;
+        algorithm
+          y := gsl.Special_functions.chap_7_5_12.gsl_sf_bessel_lnKnu(nu, x);
+        end gsl_sf_bessel_lnKnu;
+        
+        
+         model gsl_sf_bessel_lnKnu_e
+          parameter Real x=10;
+          parameter Real nu=1.5;
+          gsl.data_types.gsl_sf_result result;
+           Integer y;
+        
+          algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_12.gsl_sf_bessel_lnKnu_e(x, nu);
+        end gsl_sf_bessel_lnKnu_e;
+        
+        
+        model gsl_sf_bessel_Knu_scaled
+      parameter Real x = 10;
+          parameter Real nu = 1.5;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_5_12.gsl_sf_bessel_Knu_scaled(x, nu);
+        end gsl_sf_bessel_Knu_scaled;
+      
+        model gsl_sf_bessel_Knu_scaled_e
+      parameter Real x = 10;
+          parameter Real nu = 1.5;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_5_12.gsl_sf_bessel_Knu_scaled_e(x, nu);
+        end gsl_sf_bessel_Knu_scaled_e;
+        
       end chap_7_5_12;
       package chap_7_5_13
       end chap_7_5_13;
