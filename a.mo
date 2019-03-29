@@ -1575,8 +1575,100 @@ package gsl
       
     end chap_7_5_12;
     package chap_7_5_13
-    end chap_7_5_13;
+    function gsl_sf_bessel_zero_J0
+        input Real x;
+        output Real y;
+      
+        external "C" y =  gsl_sf_bessel_zero_J0(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end  gsl_sf_bessel_zero_J0;
     
+      function gsl_sf_bessel_zero_J0_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_zero_J0_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_zero_J0_e;
+    
+      function gsl_sf_bessel_zero_J1
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_zero_J1(x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_zero_J1;
+    
+      function gsl_sf_bessel_zero_J1_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_zero_J1_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_zero_J1_e;
+      
+      
+      
+      
+      
+      function gsl_sf_bessel_zero_Jnu
+        input Real x;
+        input Real nu;
+        output Real y;
+      
+        external "C" y = gsl_sf_bessel_zero_Jnu(nu, x) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_zero_Jnu;
+      
+      
+      function gsl_sf_bessel_zero_Jnu_e
+        input Real x;
+        input Real nu;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_bessel_zero_Jnu_e(nu, x, result) annotation(
+          Include = "#include <gsl/gsl_sf_bessel.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_bessel_zero_Jnu_e;
+    
+    end chap_7_5_13;
+    package chap_7_6
+    //clausen function
+    function gsl_sf_clausen
+    input Real x;
+    output Real y;
+    external "C" y=gsl_sf_clausen(x)annotation(Library="gsl",Library="gslcblas",Include="#include<gsl/gsl_sf_clausen.h>");
+    end gsl_sf_clausen;
+    
+    function gsl_sf_clausen_e
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_clausen_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_clausen.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_clausen_e;
+    end chap_7_6;
     
   end Special_functions;
 
@@ -2674,7 +2766,78 @@ package gsl
         
       end chap_7_5_12;
       package chap_7_5_13
-      end chap_7_5_13;
+      
+      
+      model gsl_sf_bessel_zero_J0
+          parameter Real x=10;
+          Real y;
+          algorithm
+        
+          y :=gsl.Special_functions.chap_7_5_13.gsl_sf_bessel_zero_J0(x);
+        end  gsl_sf_bessel_zero_J0;
+      
+        model gsl_sf_bessel_zero_J0_e
+          parameter Real x=10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+          algorithm
+         (result,y) := gsl.Special_functions.chap_7_5_13.gsl_sf_bessel_zero_J0_e(x);
+        end gsl_sf_bessel_zero_J0_e;
+      
+        model gsl_sf_bessel_zero_J1
+          parameter Real x=10;
+           Real y;
+        algorithm
+          y := gsl.Special_functions.chap_7_5_13.gsl_sf_bessel_zero_J1(x);
+        end gsl_sf_bessel_zero_J1;
+      
+        model gsl_sf_bessel_zero_J1_e
+          parameter Real x=10;
+          output gsl.data_types.gsl_sf_result result;
+          output Integer y;
+        algorithm
+          (result,y) :=gsl.Special_functions.chap_7_5_13.gsl_sf_bessel_zero_J1_e(x);
+        end gsl_sf_bessel_zero_J1_e;
+        
+        
+        
+        
+        
+        model gsl_sf_bessel_zero_Jnu
+          parameter Real x=10;
+          parameter Real nu=1.5;
+          output Real y;
+          algorithm
+        
+       y := gsl.Special_functions.chap_7_5_13.gsl_sf_bessel_zero_Jnu(nu, x);
+        end gsl_sf_bessel_zero_Jnu;
+        
+        
+        model gsl_sf_bessel_zero_Jnu_e
+          parameter Real x=10;
+          parameter Real nu=1.5;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm  
+         (result, y) := gsl.Special_functions.chap_7_5_13.gsl_sf_bessel_zero_Jnu_e(nu, x); 
+        end gsl_sf_bessel_zero_Jnu_e;
+      end chap_7_5_13;  
+      package chap_7_6
+      model gsl_sf_clausen
+          parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_6.gsl_sf_clausen(x);
+        end gsl_sf_clausen;
+      
+        model gsl_sf_clausen_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_6.gsl_sf_clausen_e(x);
+        end gsl_sf_clausen_e;
+      end chap_7_6;
     end special_functions;
   end Examples;
 end gsl;
