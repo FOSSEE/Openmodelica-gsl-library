@@ -1669,6 +1669,335 @@ package gsl
           Library = "gslcblas");
       end gsl_sf_clausen_e;
     end chap_7_6;
+    package chap_7_7_1
+      function gsl_sf_hydrogenicR_1
+      input Real Z;//atomic number of the atom
+      input Real r;//radus of the atom
+      output Real R;//lowest-order normalized hydrogenic bound state radial wavefunction
+    
+      external "C" R = gsl_sf_hydrogenicR_1(Z,r) annotation(
+        Include = "#include <gsl/gsl_sf_coulomb.h>",
+        Library = "gsl",
+        Library = "gslcblas");
+    end gsl_sf_hydrogenicR_1;
+    
+    
+    
+     function gsl_sf_hydrogenicR_1_e
+      input Real Z;//atomic number of the atom
+      input Real r;//radus of the atom
+       output gsl.data_types.gsl_sf_result result;
+      output Integer y;//lowest-order normalized hydrogenic bound state radial wavefunction
+    
+      external "C" y = gsl_sf_hydrogenicR_1_e(Z,r,result) annotation(
+        Include = "#include <gsl/gsl_sf_coulomb.h>",Include = "#include <gsl/gsl_sf_result.h>",
+        Library = "gsl",
+        Library = "gslcblas");
+    end gsl_sf_hydrogenicR_1_e;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    function gsl_sf_hydrogenicR
+    input Integer n;//order of the wavefunction
+    input Integer l;
+      input Real Z;//atomic number of the atom
+      input Real r;//radus of the atom
+      output Real R;//lowest-order normalized hydrogenic bound state radial wavefunction
+    
+      external "C" R = gsl_sf_hydrogenicR(n,l,Z,r) annotation(
+        Include = "#include <gsl/gsl_sf_coulomb.h>",
+        Library = "gsl",
+        Library = "gslcblas");
+    end gsl_sf_hydrogenicR;
+    
+    
+    
+     function gsl_sf_hydrogenicR_e
+     input Integer n;
+     input Integer l;
+      input Real Z;//atomic number of the atom
+      input Real r;//radus of the atom
+       output gsl.data_types.gsl_sf_result result;
+      output Integer y;//lowest-order normalized hydrogenic bound state radial wavefunction
+    
+      external "C" y = gsl_sf_hydrogenicR_e(n,l,Z,r,result) annotation(
+        Include = "#include <gsl/gsl_sf_coulomb.h>",Include = "#include <gsl/gsl_sf_result.h>",
+        Library = "gsl",
+        Library = "gslcblas");
+    end gsl_sf_hydrogenicR_e;
+    end chap_7_7_1;
+    
+    package chap_7_7_2
+    
+    function gsl_sf_coulomb_wave_FG_e
+    input Real eta;// eta=Z/k,where Z is atomic number
+    input Real x;
+    input Real L_F;
+    input Integer k;//L_F-k>-1/2
+    output gsl.data_types.gsl_sf_result F; //coulomb wave function
+      output gsl.data_types.gsl_sf_result Fp;//derivative of wave function
+        output gsl.data_types.gsl_sf_result G;//coulomb wave function
+          output gsl.data_types.gsl_sf_result Gp;//derivative of wave function
+            output Real exp_F;//out of bound error exponenet stored here
+            output Real exp_G;//out of bound error exponent stored here
+            output Integer y;
+            external "C" y=gsl_sf_coulomb_wave_FG_e( eta,  x, L_F, k, F,Fp,G,Gp,exp_F, exp_G) annotation(Include="#include<gsl/gsl_sf_coulomb.h>",Include ="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_coulomb_wave_FG_e;
+    
+    /*
+    int gsl_sf_coulomb_wave_F_array(double L_min, int kmax, double eta, double x, double fc_array[],
+    double * F_exponent)
+  */
+    function gsl_sf_coulomb_wave_F_array
+    input Real L_min;
+    input Integer kmax;
+    input Real eta;
+    input Real x;
+    output Real fc_array[kmax];
+    output Real F_exponent;
+    output Integer y;
+    external "C" y=gsl_sf_coulomb_wave_F_array( L_min, kmax, eta, x, fc_array, F_exponent)annotation(Include="#include<gsl/gsl_sf_coulomb.h>" ,Library="gsl",Library="gslcblas");
+    end gsl_sf_coulomb_wave_F_array;
+    
+    /*
+    
+    int gsl_sf_coulomb_wave_FG_array(double L_min, int kmax, double eta, double x, double fc_array[],
+    double gc_array[], double * F_exponent, double * G_exponent)*/
+    
+    function gsl_sf_coulomb_wave_FG_array
+    input Real L_min;
+    input Integer kmax;
+    input Real eta;
+    input Real x;
+    output Real fc_array[kmax];
+    output Real gc_array[kmax];
+    output Real F_exponent;
+    output Real G_exponent;
+    output Integer y;
+    external "C" y=gsl_sf_coulomb_wave_FG_array(L_min,kmax,eta,x,fc_array,gc_array,F_exponent,G_exponent)annotation(Include="#include<gsl/gsl_sf_coulomb.h>",Library="gsl",Library="gslcblas");
+    end gsl_sf_coulomb_wave_FG_array;
+    
+    function gsl_sf_coulomb_wave_FGp_array
+    input Real L_min;
+    input Integer kmax;
+    input Real eta;
+    input Real x;
+    output Real fc_array[kmax];
+    output Real fcp_array[kmax];
+    output Real gc_array[kmax];
+    output Real gcp_array[kmax];
+    output Real F_exponent;
+    output Real G_exponent;
+    output Integer y;
+    external "C" y=gsl_sf_coulomb_wave_FGp_array(L_min,kmax,eta,x,fc_array,fcp_array,gc_array,gcp_array,F_exponent,G_exponent)annotation(Include="#include<gsl/gsl_sf_coulomb.h>",Library="gsl",Library="gslcblas");
+    
+    end gsl_sf_coulomb_wave_FGp_array;
+    
+    
+    function gsl_sf_coulomb_wave_sphF_array
+    input Real L_min;
+    input Integer kmax;
+    input Real eta;
+    input Real x;
+    output Real fc_array[kmax];
+    output Real F_exponent;
+    output Integer y;
+    external "C" y=gsl_sf_coulomb_wave_sphF_array(L_min,kmax,eta,x,fc_array,F_exponent)annotation(Include="#include<gsl/gsl_sf_coulomb.h>",Library="gsl",Library="gslcblas");
+    end gsl_sf_coulomb_wave_sphF_array;
+    
+    
+    
+    
+    
+    end chap_7_7_2;
+    package chap_7_7_3
+  function gsl_sf_coulomb_CL_e
+  input Real L;
+  input Real eta;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C"y=gsl_sf_coulomb_CL_e(L,eta,result)annotation(Include="#include<gsl/gsl_sf_coulomb.h>",Include="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_coulomb_CL_e;
+  
+  function gsl_sf_coulomb_CL_array
+  input Real Lmin;
+  input Integer kmax;
+  input Real eta;
+  output Real cl[kmax];
+  output Integer y;
+  external "C" y=gsl_sf_coulomb_CL_array(Lmin,kmax,eta,cl)annotation(Include="#include<gsl/gsl_sf_coulomb.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_coulomb_CL_array;
+  
+  
+    end chap_7_7_3;
+    package chap_7_8_1
+    /*
+    
+    double 
+  int gsl_sf_coupling_3j_e(int two_ja, int two_jb, int two_jc, int two_ma, int two_mb, int two_mc,
+  gsl_sf_result * result)
+  These routines compute the Wigner 3-j coefficient,*/
+  function gsl_sf_coupling_3j
+  input Integer two_ja;
+  input Integer two_jb;
+  input Integer two_jc;
+  input Integer two_ma;
+  input Integer two_mb;
+  input Integer two_mc;
+  output Real y;
+  external "C" y=gsl_sf_coupling_3j( two_ja,two_jb,two_jc,two_ma,two_mb,two_mc)annotation(Include="#include<gsl/gsl_sf_coupling.h>",Library="gsl",Library="gslcblas");
+  
+  end gsl_sf_coupling_3j;
+  
+  function gsl_sf_coupling_3j_e
+  input Integer two_ja;
+  input Integer two_jb;
+  input Integer two_jc;
+  input Integer two_ma;
+  input Integer two_mb;
+  input Integer two_mc;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_coupling_3j_e( two_ja,two_jb,two_jc,two_ma,two_mb,two_mc,result)annotation(Include="#include<gsl/gsl_sf_coupling.h>",Include="#include<gsl/gsl_sf_result>",Library="gsl",Library="gslcblas");
+  
+  end gsl_sf_coupling_3j_e;
+    
+    end chap_7_8_1;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    package chap_7_8_2
+  function gsl_sf_coupling_6j
+  input Integer two_ja;
+  input Integer two_jb;
+  input Integer two_jc;
+  input Integer two_ma;
+  input Integer two_mb;
+  input Integer two_mc;
+  output Real y;
+  external "C" y=gsl_sf_coupling_6j( two_ja,two_jb,two_jc,two_ma,two_mb,two_mc)annotation(Include="#include<gsl/gsl_sf_coupling.h>",Library="gsl",Library="gslcblas");
+  
+  end gsl_sf_coupling_6j;
+  
+  function gsl_sf_coupling_6j_e
+  input Integer two_ja;
+  input Integer two_jb;
+  input Integer two_jc;
+  input Integer two_ma;
+  input Integer two_mb;
+  input Integer two_mc;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_coupling_6j_e( two_ja,two_jb,two_jc,two_ma,two_mb,two_mc,result)annotation(Include="#include<gsl/gsl_sf_coupling.h>",Include="#include<gsl/gsl_sf_result>",Library="gsl",Library="gslcblas");
+  
+  end gsl_sf_coupling_6j_e;
+    
+    end chap_7_8_2;
+    
+    
+    
+    
+    
+    
+    
+    
+   /* 
+   
+   double gsl_sf_coupling_9j(int two_ja, int two_jb, int two_jc, int two_jd, int two_je, int two_jf,
+  int two_jg, int two_jh, int two_ji)
+  int gsl_sf_coupling_9j_e(int two_ja, int two_jb, int two_jc, int two_jd, int two_je, int two_jf, int two_jg,
+  int two_jh, int two_ji, gsl_sf_result * result)
+  These routines compute the Wigner 9-j coeffici
+    
+   */ 
+    
+    
+     package chap_7_8_3
+  function gsl_sf_coupling_9j
+  input Integer two_ja;
+  input Integer two_jb;
+  input Integer two_jc;
+  input Integer two_jd;
+  input Integer two_je;
+  input Integer two_jf;
+  input Integer two_jg;
+  input Integer two_jh;
+  input Integer two_ji;
+  output Real y;
+  external "C" y=gsl_sf_coupling_9j( two_ja,two_jb,two_jc,two_jd,two_je,two_jf,two_jg,two_jh,two_ji)annotation(Include="#include<gsl/gsl_sf_coupling.h>",Library="gsl",Library="gslcblas");
+  
+  end gsl_sf_coupling_9j;
+  
+  function gsl_sf_coupling_9j_e
+  input Integer two_ja;
+  input Integer two_jb;
+  input Integer two_jc;
+  input Integer two_jd;
+  input Integer two_je;
+  input Integer two_jf;
+  input Integer two_jg;
+  input Integer two_jh;
+  input Integer two_ji;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_coupling_9j_e(two_ja,two_jb,two_jc,two_jd,two_je,two_jf,two_jg,two_jh,two_ji ,result)annotation(Include="#include<gsl/gsl_sf_coupling.h>",Include="#include<gsl/gsl_sf_result>",Library="gsl",Library="gslcblas");
+  
+  end gsl_sf_coupling_9j_e;
+    
+    end chap_7_8_3;
+    package chap_7_9
+    
+    
+      function gsl_sf_dawson
+  input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_dawson(x) annotation(
+          Include = "#include <gsl/gsl_sf_dawson.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_dawson;
+  
+      function gsl_sf_dawson_e
+  input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_dawson_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_dawson.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_dawson_e;
+    
+    end chap_7_9;
+  
     
   end Special_functions;
 
@@ -2379,7 +2708,7 @@ package gsl
         end gsl_sf_bessel_jl_e;
         
         model gsl_sf_bessel_jl_array
-          // input Integer nmin;
+          // parameter Integer nmin;
           parameter Integer lmax=10;
            parameter Real x=10;
            Real result_array[lmax];
@@ -2390,7 +2719,7 @@ package gsl
         
         
         model gsl_sf_bessel_jl_steed_array
-          // input Integer nmin;
+          // parameter Integer nmin;
           parameter Integer lmax=10;
            parameter Real x=10;
            Real result_array[lmax];
@@ -2472,7 +2801,7 @@ package gsl
         end gsl_sf_bessel_jl_e;
         
         model gsl_sf_bessel_jl_array
-          // input Integer nmin;
+          // parameter Integer nmin;
           parameter Integer lmax=10;
            parameter Real x=10;
            Real result_array[lmax];
@@ -2838,6 +3167,292 @@ package gsl
           (result, y) := gsl.Special_functions.chap_7_6.gsl_sf_clausen_e(x);
         end gsl_sf_clausen_e;
       end chap_7_6;
+      package chap_7_7_1
+      model gsl_sf_hydrogenicR_1
+  parameter Real Z = 10;
+          parameter Real r = 10;
+          Real R;
+        algorithm
+          R := gsl.Special_functions.chap_7_7_1.gsl_sf_hydrogenicR_1(Z, r);
+        end gsl_sf_hydrogenicR_1;
+        
+        model gsl_sf_hydrogenicR_1_e
+      parameter Real Z = 10;
+          parameter Real r = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+         ( result,y) := gsl.Special_functions.chap_7_7_1.gsl_sf_hydrogenicR_1_e(Z, r);
+        end gsl_sf_hydrogenicR_1_e;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        model gsl_sf_hydrogenicR
+        parameter Integer n=1;
+        parameter Integer l=0;
+      parameter Real Z = 10;
+          parameter Real r =0.1;
+          Real R;
+        algorithm
+          R := gsl.Special_functions.chap_7_7_1.gsl_sf_hydrogenicR(n,l,Z, r);
+        end gsl_sf_hydrogenicR;
+        
+        model gsl_sf_hydrogenicR_e
+        parameter Integer n=1;
+        parameter Integer l=0;
+        
+      parameter Real Z = 10;
+          parameter Real r = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+         ( result,y) := gsl.Special_functions.chap_7_7_1.gsl_sf_hydrogenicR_e(n,l,Z, r);
+        end gsl_sf_hydrogenicR_e;
+      end chap_7_7_1;
+      package chap_7_7_2
+      
+      model gsl_sf_coulomb_wave_FG_e
+      parameter Real eta=1;// eta=Z/k,where Z is atomic number
+      parameter Real x=0.1;
+      parameter Real L_F=1;
+      parameter Integer k=1;//L_F-k>-1/2
+       gsl.data_types.gsl_sf_result F; //coulomb wave function
+       gsl.data_types.gsl_sf_result Fp;//derivative of wave function
+       gsl.data_types.gsl_sf_result G;//coulomb wave function
+       gsl.data_types.gsl_sf_result Gp;//derivative of wave function
+       Real exp_F;//out of bound error exponenet stored here
+       Real exp_G;//out of bound error exponent stored here
+       Integer y;
+       algorithm
+      (F,Fp,G,Gp,exp_F,exp_G, y):=gsl.Special_functions.chap_7_7_2.gsl_sf_coulomb_wave_FG_e( eta,  x, L_F, k) ;
+      end gsl_sf_coulomb_wave_FG_e;
+      
+      
+       model gsl_sf_coulomb_wave_F_array
+          parameter Real L_min=1;
+          parameter Integer kmax=2;
+          parameter Real eta=1;
+          parameter Real x=1;
+          Real fc_array[kmax];
+          Real F_exponent;
+           Integer y;
+           algorithm
+         (fc_array,F_exponent, y):=gsl.Special_functions.chap_7_7_2.gsl_sf_coulomb_wave_F_array( L_min, kmax, eta, x);
+          end gsl_sf_coulomb_wave_F_array;
+          
+          
+          model gsl_sf_coulomb_wave_FG_array
+          parameter Real L_min=1;
+          parameter Integer kmax=2;
+          parameter Real eta=1;
+          parameter Real x=1.5;
+          Real fc_array[kmax];
+          Real gc_array[kmax];
+          Real F_exponent;
+          Real G_exponent;
+          Integer y;
+          algorithm (fc_array,gc_array,F_exponent,G_exponent,y):=gsl.Special_functions.chap_7_7_2.gsl_sf_coulomb_wave_FG_array(L_min,kmax,eta,x);
+          end gsl_sf_coulomb_wave_FG_array;
+          
+          
+          
+          
+          
+      model gsl_sf_coulomb_wave_FGp_array
+          parameter Real L_min=1;
+          parameter Integer kmax=2;
+          parameter Real eta=1;
+          parameter Real x=1.5;
+          Real fc_array[kmax];
+          Real fcp_array[kmax];
+          Real gc_array[kmax];
+          Real gcp_array[kmax];
+          Real F_exponent;
+          Real G_exponent;
+          Integer y;
+          algorithm (fc_array,fcp_array,gc_array,gcp_array,F_exponent,G_exponent,y):=gsl.Special_functions.chap_7_7_2.gsl_sf_coulomb_wave_FGp_array(L_min,kmax,eta,x);
+          end gsl_sf_coulomb_wave_FGp_array;    
+      
+      
+      
+      model gsl_sf_coulomb_wave_sphF_array
+      parameter Real L_min=1;
+      parameter Integer kmax=2;
+      parameter Real eta=1;
+      parameter Real x=1.5;
+      Real fc_array[kmax];
+      Real F_exponent;
+      Integer y;
+      algorithm (fc_array,F_exponent,y):=gsl.Special_functions.chap_7_7_2.gsl_sf_coulomb_wave_sphF_array(L_min,kmax,eta,x);
+      end gsl_sf_coulomb_wave_sphF_array;
+      
+      
+      end chap_7_7_2;
+      
+      
+      package chap_7_7_3
+     
+      model gsl_sf_coulomb_CL_e
+      parameter Real L=1;
+      parameter Real eta=1.5;
+       gsl.data_types.gsl_sf_result result;
+       Integer y;
+       algorithm
+      (result,y):=gsl.Special_functions.chap_7_7_3.gsl_sf_coulomb_CL_e(L,eta);
+      end gsl_sf_coulomb_CL_e;
+      
+      model gsl_sf_coulomb_CL_array
+      parameter Real Lmin=1;
+      parameter Integer kmax=2;
+      parameter Real eta=1.5;
+      Real cl[kmax];
+      Integer y;
+      algorithm
+      (cl,y):=gsl.Special_functions.chap_7_7_3.gsl_sf_coulomb_CL_array(Lmin,kmax,eta);
+      end gsl_sf_coulomb_CL_array;
+      end chap_7_7_3;
+      
+      
+      package chap_7_8_1
+     model gsl_sf_coupling_3j
+    parameter Integer two_ja=0;
+    parameter Integer two_jb=0;
+    parameter Integer two_jc=0;
+    parameter Integer two_ma=0;
+    parameter Integer two_mb=0;
+    parameter Integer two_mc=0;
+    Real y;
+    algorithm
+    y:=gsl.Special_functions.chap_7_8_1.gsl_sf_coupling_3j( two_ja,two_jb,two_jc,two_ma,two_mb,two_mc);
+    
+    end gsl_sf_coupling_3j;
+    
+    model gsl_sf_coupling_3j_e
+    parameter Integer two_ja=0;
+    parameter Integer two_jb=0;
+    parameter Integer two_jc=0;
+    parameter Integer two_ma=0;
+    parameter Integer two_mb=0;
+    parameter Integer two_mc=0;
+     gsl.data_types.gsl_sf_result result;
+     Integer y;
+     algorithm
+     (result,y):=gsl.Special_functions.chap_7_8_1.gsl_sf_coupling_3j_e( two_ja,two_jb,two_jc,two_ma,two_mb,two_mc);
+    
+    end gsl_sf_coupling_3j_e;
+      end chap_7_8_1;
+      
+      
+      
+      
+      
+      
+       package chap_7_8_2
+     model gsl_sf_coupling_6j
+    parameter Integer two_ja=0;
+    parameter Integer two_jb=0;
+    parameter Integer two_jc=0;
+    parameter Integer two_ma=0;
+    parameter Integer two_mb=0;
+    parameter Integer two_mc=0;
+    Real y;
+    algorithm
+    y:=gsl.Special_functions.chap_7_8_2.gsl_sf_coupling_6j( two_ja,two_jb,two_jc,two_ma,two_mb,two_mc);
+    
+    end gsl_sf_coupling_6j;
+    
+    model gsl_sf_coupling_6j_e
+    parameter Integer two_ja=0;
+    parameter Integer two_jb=0;
+    parameter Integer two_jc=0;
+    parameter Integer two_ma=0;
+    parameter Integer two_mb=0;
+    parameter Integer two_mc=0;
+     gsl.data_types.gsl_sf_result result;
+     Integer y;
+     algorithm
+     (result,y):=gsl.Special_functions.chap_7_8_2.gsl_sf_coupling_6j_e( two_ja,two_jb,two_jc,two_ma,two_mb,two_mc);
+    
+    end gsl_sf_coupling_6j_e;
+    
+    
+      end chap_7_8_2;
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      package chap_7_8_3
+     model gsl_sf_coupling_9j
+    parameter Integer two_ja=0;
+    parameter Integer two_jb=0;
+    parameter Integer two_jc=0;
+    parameter Integer two_jd=0;
+    parameter Integer two_je=0;
+    parameter Integer two_jf=0;
+      parameter Integer two_jg=0;
+      parameter Integer two_jh=0;
+      parameter Integer two_ji=0;
+    Real y;
+    algorithm
+    y:=gsl.Special_functions.chap_7_8_3.gsl_sf_coupling_9j( two_ja,two_jb,two_jc,two_jd,two_je,two_jf,two_jg,two_jh,two_ji);
+    
+    end gsl_sf_coupling_9j;
+    
+    model gsl_sf_coupling_9j_e
+    parameter Integer two_ja=0;
+      parameter Integer two_jb=0;
+      parameter Integer two_jc=0;
+      parameter Integer two_jd=0;
+      parameter Integer two_je=0;
+      parameter Integer two_jf=0;
+      parameter Integer two_jg=0;
+      parameter Integer two_jh=0;
+      parameter Integer two_ji=0;
+     gsl.data_types.gsl_sf_result result;
+     Integer y;
+     algorithm
+     (result,y):=gsl.Special_functions.chap_7_8_3.gsl_sf_coupling_9j_e( two_ja,two_jb,two_jc,two_jd,two_je,two_jf,two_jg,two_jh,two_ji);
+    
+    end gsl_sf_coupling_9j_e;
+    
+    
+      end chap_7_8_3;
+      package chap_7_9
+      model gsl_sf_dawson
+  parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_9.gsl_sf_dawson(x);
+        end gsl_sf_dawson;
+      
+          model gsl_sf_dawson_e
+  parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_9.gsl_sf_dawson_e(x);
+        end gsl_sf_dawson_e;
+      end chap_7_9;
+      
     end special_functions;
   end Examples;
 end gsl;
