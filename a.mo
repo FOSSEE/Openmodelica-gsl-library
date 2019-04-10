@@ -1997,7 +1997,238 @@ package gsl
       end gsl_sf_dawson_e;
     
     end chap_7_9;
+    
+    
   
+    package chap_7_10
+   // double gsl_sf_debye_1(double x)
+   function gsl_sf_debye_1
+  input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_debye_1(x)annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_1;
+  
+  function gsl_sf_debye_1_e
+  input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_debye_1_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_1_e;
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      function gsl_sf_debye_2
+  input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_debye_2(x)annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_2;
+  
+  function gsl_sf_debye_2_e
+  input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_debye_2_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_2_e;
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      function gsl_sf_debye_3
+  input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_debye_3(x)annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_3;
+  
+  function gsl_sf_debye_3_e
+  input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_debye_3_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_3_e;
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      function gsl_sf_debye_4
+  input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_debye_4(x)annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_4;
+  
+  function gsl_sf_debye_4_e
+  input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_debye_4_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_4_e;
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      function gsl_sf_debye_5
+  input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_debye_5(x)annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_5;
+  
+  function gsl_sf_debye_5_e
+  input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_debye_5_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_5_e;
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      function gsl_sf_debye_6
+  input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_debye_6(x)annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_6;
+  
+  function gsl_sf_debye_6_e
+  input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_debye_6_e(x, result) annotation(
+          Include = "#include <gsl/gsl_sf_debye.h>",
+          Include = "#include <gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_debye_6_e;
+    end chap_7_10;
+    
+    
+    
     
   end Special_functions;
 
@@ -3452,6 +3683,147 @@ package gsl
           (result, y) := gsl.Special_functions.chap_7_9.gsl_sf_dawson_e(x);
         end gsl_sf_dawson_e;
       end chap_7_9;
+      
+      
+      
+      package chap_7_10
+      
+      model gsl_sf_debye_1
+    parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_10.gsl_sf_debye_1(x);
+        end gsl_sf_debye_1;
+      
+          model gsl_sf_debye_1_e
+    parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_10.gsl_sf_debye_1_e(x);
+        end gsl_sf_debye_1_e;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        model gsl_sf_debye_2
+    parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_10.gsl_sf_debye_2(x);
+        end gsl_sf_debye_2;
+      
+          model gsl_sf_debye_2_e
+    parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_10.gsl_sf_debye_2_e(x);
+        end gsl_sf_debye_2_e;
+        
+        
+        
+        
+        
+        
+        
+        model gsl_sf_debye_3
+    parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_10.gsl_sf_debye_3(x);
+        end gsl_sf_debye_3;
+      
+          model gsl_sf_debye_3_e
+    parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_10.gsl_sf_debye_3_e(x);
+        end gsl_sf_debye_3_e;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        model gsl_sf_debye_4
+    parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_10.gsl_sf_debye_4(x);
+        end gsl_sf_debye_4;
+      
+          model gsl_sf_debye_4_e
+    parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_10.gsl_sf_debye_4_e(x);
+        end gsl_sf_debye_4_e;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        model gsl_sf_debye_5
+    parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_10.gsl_sf_debye_5(x);
+        end gsl_sf_debye_5;
+      
+          model gsl_sf_debye_5_e
+    parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_10.gsl_sf_debye_5_e(x);
+        end gsl_sf_debye_5_e;
+        
+        
+        
+        
+        
+        model gsl_sf_debye_6
+    parameter Real x = 10;
+          Real y(start = 1);
+        algorithm
+          y := gsl.Special_functions.chap_7_10.gsl_sf_debye_6(x);
+        end gsl_sf_debye_6;
+      
+          model gsl_sf_debye_6_e
+    parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_10.gsl_sf_debye_6_e(x);
+        end gsl_sf_debye_6_e;
+      end chap_7_10;
       
     end special_functions;
   end Examples;
