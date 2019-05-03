@@ -2732,34 +2732,222 @@ package gsl
           Library = "gsl",
           Library = "gslcblas");
       end gsl_sf_Shi_e;
-
-      /*
-      7.17.3 Hyperbolic Integrals
-      double gsl_sf_Shi(double x)
-      50
-      Chapter 7. Special FunctionsGNU Scientific Library, Release 2.5
-      int gsl_sf_Shi_e(double x, gsl_sf_result * result)
-      These routines compute the integral
-      x
-      Z
-      dt sinh(t)/t
-      Shi(x) =
-      0
-      double gsl_sf_Chi(double x)
-      int gsl_sf_Chi_e(double x, gsl_sf_result * result)
-      These routines compute the integral
-      
-      Z
-      Chi(x) := < γ E + log(x) +
-      x
-      
-      dt(cosh(t) − 1)/t
-      0
-      where γ E is the Euler constant (available as the macro M_EULER).
-      */
-      annotation(
-        Documentation);
+      
+      
+      
+    function gsl_sf_Chi
+        //hyperbolic integrals
+        input Real x;
+        output Real y;
+      
+        external "C" y = gsl_sf_Chi(x) annotation(
+          Include = "#include<gsl/gsl_sf_expint.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_Chi;
+    
+      function gsl_sf_Chi_e
+        //hyperbolic integral
+        input Real x;
+        output gsl.data_types.gsl_sf_result result;
+        output Integer y;
+      
+        external "C" y = gsl_sf_Chi_e(x, result) annotation(
+          Include = "#include<gsl/gsl_sf_expint.h>",
+          Include = "#include<gsl/gsl_sf_result.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_sf_Chi_e;
     end chap_7_17_3;
+    
+    package chap_7_17_4
+    function gsl_sf_expint_3
+    input Real x;
+    output Real y;
+    external "C" y=gsl_sf_expint_3(x)annotation(Include="#include<gsl/gsl_sf_expint.h>",Library="gsl",Library="gslcblas");
+    end gsl_sf_expint_3;
+    
+    function gsl_sf_expint_3_e
+    input Real x;
+    output gsl.data_types.gsl_sf_result result;
+    output Integer y;
+    external "C" y=gsl_sf_expint_3_e(x,result)annotation(Include="#include<gsl/gsl_sf_expint.h>",Include="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+    end gsl_sf_expint_3_e;
+    end chap_7_17_4;
+    
+    package chap_7_17_5
+    function gsl_sf_Si
+    input Real x;
+    output Real y;
+    external "C" y=gsl_sf_Si(x)annotation(Include="#include<gsl/gsl_sf_expint.h>",Library="gsl",Library="gslcblas");
+    end gsl_sf_Si;
+    
+    function gsl_sf_Si_e
+    input Real x;
+    output gsl.data_types.gsl_sf_result result;
+    output Integer y;
+    external "C" y=gsl_sf_Si_e(x,result)annotation(Include="#include<gsl/gsl_sf_expint.h>",Include="#include<gsl/gsl_sf_result>",Library="gsl",Library="gslcbas");
+    end gsl_sf_Si_e;
+    
+    function gsl_sf_Ci
+    input Real x;
+    output Real y;
+    external "C" y=gsl_sf_Ci(x)annotation(Include="#include<gsl/gsl_sf_expint.h>",Library="gsl",Library="gslcblas");
+    end gsl_sf_Ci;
+    
+    function gsl_sf_Ci_e
+    input Real x;
+    output gsl.data_types.gsl_sf_result result;
+    output Integer y;
+    external "C" y=gsl_sf_Ci_e(x,result)annotation(Include="#include<gsl/gsl_sf_expint.h>",Include="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+    end gsl_sf_Ci_e;
+    end chap_7_17_5;
+    
+    package chap_7_18_1
+    
+    
+    function gsl_sf_fermi_dirac_m1
+    input  Real x;
+    output Real y;
+    external "C" y=gsl_sf_fermi_dirac_m1(x)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas");
+    end gsl_sf_fermi_dirac_m1;
+    
+    
+  //int gsl_sf_fermi_dirac_m1_e(double x, gsl_sf_result * result)
+  function gsl_sf_fermi_dirac_m1_e
+  input Real x;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_fermi_dirac_m1_e(x,result)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas",Include="#include<gsl/gsl_sf_result.h>");
+  end gsl_sf_fermi_dirac_m1_e;
+  
+  //double gsl_sf_fermi_dirac_0(double x)
+  function gsl_sf_fermi_dirac_0
+  input Real x;
+  output Real y;
+  external "C" y=gsl_sf_fermi_dirac_0(x)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_0;
+  
+  function gsl_sf_fermi_dirac_0_e
+  input Real x;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_fermi_dirac_0_e(x,result)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Include="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_0_e;
+  
+  
+  //double gsl_sf_fermi_dirac_1(double x)
+  function gsl_sf_fermi_dirac_1
+  input Real x;
+  output Real y;
+  external "C" y=gsl_sf_fermi_dirac_1(x)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_1;
+  
+  //int gsl_sf_fermi_dirac_1_e(double x, gsl_sf_result * result)
+  function gsl_sf_fermi_dirac_1_e
+  input  Real x;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_fermi_dirac_1_e(x,result)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Include="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_1_e;
+  
+  
+  
+  //double gsl_sf_fermi_dirac_2(double x)
+  function gsl_sf_fermi_dirac_2
+  input Real x;
+  output Real y;
+  external "C" y=gsl_sf_fermi_dirac_2(x)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_2;
+  
+  //int gsl_sf_fermi_dirac_2_e(double x, gsl_sf_result * result)
+  function gsl_sf_fermi_dirac_2_e
+  input  Real x;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_fermi_dirac_2_e(x,result)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Include="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_2_e;
+  
+  
+  
+  
+  
+  
+  //double gsl_sf_fermi_dirac_int(int j, double x)
+  function gsl_sf_fermi_dirac_int
+  input Integer j;
+  input Real x;
+  output Real y;
+  external "C" y=gsl_sf_fermi_dirac_int(j,x)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_int;
+  
+  function gsl_sf_fermi_dirac_int_e
+  input Integer j;
+  input Real x;
+  output gsl.data_types.gsl_sf_result result;
+  output Real y;
+  external "C" y=gsl_sf_fermi_dirac_int_e(j,x,result)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Include="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_int_e;
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  function gsl_sf_fermi_dirac_mhalf
+    input  Real x;
+    output Real y;
+    external "C" y=gsl_sf_fermi_dirac_mhalf(x)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas");
+    end gsl_sf_fermi_dirac_mhalf;
+    
+    
+  
+  function gsl_sf_fermi_dirac_mhalf_e
+  input Real x;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_fermi_dirac_mhalf_e(x,result)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas",Include="#include<gsl/gsl_sf_result.h>");
+  end gsl_sf_fermi_dirac_mhalf_e;
+  
+  
+  function gsl_sf_fermi_dirac_half
+  input Real x;
+  output Real y;
+  external "C" y=gsl_sf_fermi_dirac_half(x)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_half;
+  
+  function gsl_sf_fermi_dirac_half_e
+  input Real x;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_fermi_dirac_half_e(x,result)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Include="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_half_e;
+  
+  
+  
+  function gsl_sf_fermi_dirac_3half
+  input Real x;
+  output Real y;
+  external "C" y=gsl_sf_fermi_dirac_3half(x)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_3half;
+  
+  
+  function gsl_sf_fermi_dirac_3half_e
+  input  Real x;
+  output gsl.data_types.gsl_sf_result result;
+  output Integer y;
+  external "C" y=gsl_sf_fermi_dirac_3half_e(x,result)annotation(Include="#include<gsl/gsl_sf_fermi_dirac.h>",Include="#include<gsl/gsl_sf_result.h>",Library="gsl",Library="gslcblas");
+  end gsl_sf_fermi_dirac_3half_e;
+  
+  
+    end chap_7_18_1;
   end Special_functions;
 
   package Examples
@@ -4645,7 +4833,211 @@ package gsl
         algorithm
           (result, y) := gsl.Special_functions.chap_7_17_3.gsl_sf_Shi_e(x);
         end gsl_sf_Shi_e;
+        
+        
+        model gsl_sf_Chi
+          parameter Real x = 10;
+          Real y;
+        algorithm
+          y := gsl.Special_functions.chap_7_17_3.gsl_sf_Chi(x);
+        end gsl_sf_Chi;
+      
+        model gsl_sf_Chi_e
+          parameter Real x = 10;
+          gsl.data_types.gsl_sf_result result;
+          Integer y;
+        algorithm
+          (result, y) := gsl.Special_functions.chap_7_17_3.gsl_sf_Chi_e(x);
+        end gsl_sf_Chi_e;
       end chap_7_17_3;
+      
+      package chap_7_17_4
+       model gsl_sf_expint_3
+       parameter Real x=10;
+       Real y;
+       algorithm
+       y:=gsl.Special_functions.chap_7_17_4.gsl_sf_expint_3(x);
+       end gsl_sf_expint_3;
+       
+       model gsl_sf_expint_3_e
+       parameter Real x=10;
+       gsl.data_types.gsl_sf_result result;
+       Integer y;
+       algorithm
+       (result,y):=gsl.Special_functions.chap_7_17_4.gsl_sf_expint_3_e(x);
+       end gsl_sf_expint_3_e;
+      end chap_7_17_4;
+      
+      package chap_7_17_5
+      
+      model gsl_sf_Si
+      parameter Real x=10;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_17_5.gsl_sf_Si(x);
+      end gsl_sf_Si;
+      
+      model gsl_sf_Si_e
+      parameter Real x=2;
+      gsl.data_types.gsl_sf_result result;
+      Integer y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_17_5.gsl_sf_Si_e(x);
+      end gsl_sf_Si_e;
+      
+      model gsl_sf_Ci
+      parameter Real x=2;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_17_5.gsl_sf_Ci(x);
+      end gsl_sf_Ci;
+      
+      model gsl_sf_Ci_e
+      parameter Real x=2;
+      gsl.data_types.gsl_sf_result result;
+      Integer y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_17_5.gsl_sf_Ci_e(x);
+      end gsl_sf_Ci_e;
+      end chap_7_17_5;
+      
+      package chap_7_18_1
+      
+      
+      model gsl_sf_fermi_dirac_m1
+      parameter Real x=2;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_m1(x);
+      end gsl_sf_fermi_dirac_m1;
+      
+      
+      model gsl_sf_fermi_dirac_m1_e
+      parameter Real x=2;
+      gsl.data_types.gsl_sf_result result;
+      Integer y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_m1_e(x);
+      end gsl_sf_fermi_dirac_m1_e;
+      
+      model gsl_sf_fermi_dirac_0
+      parameter Real x=2;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_0(x);
+      end gsl_sf_fermi_dirac_0;
+      
+      model gsl_sf_fermi_dirac_0_e
+      parameter Real x=2;
+      gsl.data_types.gsl_sf_result result;
+      Integer y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_0_e(x);
+      end gsl_sf_fermi_dirac_0_e;
+      
+       model gsl_sf_fermi_dirac_1
+      parameter Real x=2;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_1(x);
+      end gsl_sf_fermi_dirac_1;
+      
+      model gsl_sf_fermi_dirac_1_e
+      parameter Real x=2;
+      gsl.data_types.gsl_sf_result result;
+      Integer y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_1_e(x);
+      end gsl_sf_fermi_dirac_1_e;
+      
+      
+      
+       model gsl_sf_fermi_dirac_2
+      parameter Real x=2;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_2(x);
+      end gsl_sf_fermi_dirac_2;
+      
+      model gsl_sf_fermi_dirac_2_e
+      parameter Real x=2;
+      gsl.data_types.gsl_sf_result result;
+      Integer y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_2_e(x);
+      end gsl_sf_fermi_dirac_2_e;
+      
+      
+      model gsl_sf_fermi_dirac_int
+      parameter Integer j=2;
+      parameter Real x=2;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_int(j,x);
+      end gsl_sf_fermi_dirac_int;
+      
+      model gsl_sf_fermi_dirac_int_e
+      parameter Integer j=2;
+      parameter Real x=3;
+      gsl.data_types.gsl_sf_result result;
+      Real y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_int_e(j,x);
+      end gsl_sf_fermi_dirac_int_e;
+      
+      
+      model gsl_sf_fermi_dirac_mhalf
+      parameter Real x=2;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_mhalf(x);
+      end gsl_sf_fermi_dirac_mhalf;
+      
+      
+      model gsl_sf_fermi_dirac_mhalf_e
+      parameter Real x=2;
+      gsl.data_types.gsl_sf_result result;
+      Integer y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_mhalf_e(x);
+      end gsl_sf_fermi_dirac_mhalf_e;
+      
+      model gsl_sf_fermi_dirac_half
+      parameter Real x=2;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_half(x);
+      end gsl_sf_fermi_dirac_half;
+      
+      model gsl_sf_fermi_dirac_half_e
+      parameter Real x=2;
+      gsl.data_types.gsl_sf_result result;
+      Integer y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_half_e(x);
+      end gsl_sf_fermi_dirac_half_e;
+      
+       model gsl_sf_fermi_dirac_3half
+      parameter Real x=2;
+      Real y;
+      algorithm
+      y:=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_3half(x);
+      end gsl_sf_fermi_dirac_3half;
+      
+      model gsl_sf_fermi_dirac_3half_e
+      parameter Real x=2;
+      gsl.data_types.gsl_sf_result result;
+      Integer y;
+      algorithm
+      (result,y):=gsl.Special_functions.chap_7_18_1.gsl_sf_fermi_dirac_3half_e(x);
+      end gsl_sf_fermi_dirac_3half_e;
+    
+      
+      
+      
+      end chap_7_18_1;
+      
+      
     end special_functions;
   end Examples;
 end gsl;
