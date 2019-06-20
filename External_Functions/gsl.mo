@@ -3096,14 +3096,452 @@ end gsl_sf_bessel_jl_e;
   
   package STATISTICS
   package chap_21_1
-  function gsl_stats_mean
+  function gsl_stats_mean"This function returns the arithmetic mean of data, a dataset of length n with stride stride."
   input Real data[:];
   input Integer stride;
   input Integer n;
   output Real mean;
-  external "C" mean=gsl_stats_mean( data[:], stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Include="#include<gsl/gsl_statistics_int.h>", Library="gsl",Library="gslcblas");
+  external "C" mean=gsl_stats_mean( data, stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>", Library="gsl",Library="gslcblas");
   end gsl_stats_mean;
+  
+  function gsl_stats_variance"This function returns the estimated, or sample, variance of data, a dataset of length n with stride stride."
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  output Real variance;
+  external "C" variance=gsl_stats_variance(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_variance;
+  
+  function gsl_stats_variance_m"This function returns the sample variance of data relative to the  value of mean calculated using the function gsl_stats_mean."
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  input Real mean;
+  output Real variance_m;
+  external "C" variance_m=gsl_stats_variance_m(data ,stride,n,mean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_variance_m;
+  
+  function gsl_stats_sd"The function returns the standard deviation of the given data set of length n and stride 'stride'"
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  output Real sd;
+  external "C" sd=gsl_stats_sd(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_sd;
+  
+  function gsl_stats_sd_m"This function returns the sample standard deviation of data relative to the  value of mean calculated using the function gsl_stats_mean."
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  input Real mean;
+  output Real sd_m;
+  external "C" sd_m=gsl_stats_sd_m(data ,stride,n,mean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_sd_m;
+  
+  function gsl_stats_tss"This function returns the total sum of squares(TSS)  of a dataset of length n with stride stride."
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  output Real tss"total sum of squares";
+  external "C" tss=gsl_stats_tss(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_tss;
+  
+  function gsl_stats_tss_m"This function returns the sample total sum of  squares  of data relative to the  value of mean(calculated from the function gsl_stats_mean) for a given data set with length n and given stride"
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  input Real mean;
+  output Real tss_m;
+  external "C" tss_m=gsl_stats_tss_m(data ,stride,n,mean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_tss_m;
+  
+  function gsl_stats_variance_with_fixed_mean"This function calculates the variance of a dataset with the population mean known a priori"
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  input Real mean;
+  output Real  variance;
+  external "C" variance=gsl_stats_variance_with_fixed_mean(data,stride,n,mean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_variance_with_fixed_mean;
+  
+  function gsl_stats_sd_with_fixed_mean"This function calculates the standard deviation of a dataset with the population mean known a priori"
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  input Real mean;
+  output Real  sd;
+  external "C" sd=gsl_stats_sd_with_fixed_mean(data,stride,n,mean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_sd_with_fixed_mean;
+  
   end chap_21_1;
+  
+  package chap_21_2
+  function gsl_stats_absdev"This function computes  the absolute deviation from mean of the data  and given length n and stride "
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  output Real absdev;
+  external "C" absdev=gsl_stats_absdev(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_absdev;
+  
+  function gsl_stats_absdev_m"This function  computes the absolute deviation of data set with the mean ,stride,length given"
+  input Real data[:];
+  input Integer stride;
+  input Integer n;
+  input Real mean;
+  output Real absdev_m;
+  external "C" absdev_m=gsl_stats_absdev_m(data,stride,n,mean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_absdev_m;
+  end chap_21_2;
+   package chap_21_3
+   function gsl_stats_skew"This function computes the skewness of data, a dataset of length n with stride stride."
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   output Real skew;
+   external "C" skew=gsl_stats_skew(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_skew;
+   
+   function gsl_stats_skew_m_sd"This function computes the skewness of the dataset data using the given values of the mean mean and standard
+  deviation sd"
+   input Real data[:];
+   input Integer stride;
+   input  Integer n;
+   input Real mean;
+   input Real sd;
+   output Real skew;
+   external"C" skew= gsl_stats_skew_m_sd(data,stride,n,mean,sd)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_skew_m_sd;
+   
+   function gsl_stats_kurtosis"This function computes the kurtosis of data, a dataset of length n with stride stride"
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   output Real kurtosis;
+   external "C" kurtosis=gsl_stats_kurtosis(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_kurtosis;
+   
+   
+   function gsl_stats_kurtosis_m_sd"This function computes the kurtosis of the dataset data using the given values of the mean mean and standard
+   deviation sd"
+   input Real data[:];
+   input Integer stride;
+   input  Integer n;
+   input Real mean;
+   input Real sd;
+   output Real kurtosis;
+   external"C" kurtosis= gsl_stats_kurtosis_m_sd(data,stride,n,mean,sd)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_kurtosis_m_sd;
+   end chap_21_3;
+   package chap_21_4
+   function gsl_stats_lag1_autocorrelation"This function computes the lag-1 autocorrelation of the dataset data given  stride and length n"
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   output Real lag1;
+   external "C" lag1=gsl_stats_lag1_autocorrelation(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_lag1_autocorrelation;
+   
+   function gsl_stats_lag1_autocorrelation_m"This function computes the lag-1 autocorrelation of the dataset data using the given value of the mean mean,stride and length"
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   input Real mean;
+   output Real lag1;
+   external "C" lag1=gsl_stats_lag1_autocorrelation_m(data,stride,n,mean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_lag1_autocorrelation_m;
+   end chap_21_4;
+   
+   package chap_21_5
+   function gsl_stats_covariance"This function computes the covariance of data sets data1 and data2 given their strides and length n"
+   input Real data1[:];
+   input Integer stride1;
+   input Real data2[:];
+   input Integer stride2;
+   input Integer n;
+   output Real covar;
+   external "C" covar=gsl_stats_covariance(data1,stride1,data2,stride2,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_covariance;
+   
+   function gsl_stats_covariance_m"This function computes the covariance of data sets data1 and data2 given their strides and length n and mean1 and mean2"
+   input Real data1[:];
+   input Integer stride1;
+   input Real data2[:];
+   input Integer stride2;
+   input Integer n;
+   input Real mean1;
+   input Real mean2;
+   output Real covar;
+   external "C" covar=gsl_stats_covariance_m(data1,stride1,data2,stride2,n,mean1,mean2)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_covariance_m;
+   end chap_21_5;
+   package chap_21_6"correlation"
+   function gsl_stats_correlation"This function efficiently computes the Pearson correlation coefficient between the datasets data1 and data2
+  which must both be of the same length n."
+  input Real data1[:];
+  input Integer stride1;
+  input Real data2[:];
+  input Integer stride2;
+  input Integer n;
+  output Real r"pearson correlation coefficient";
+  external "C" r=gsl_stats_correlation(data1,stride1,data2,stride2,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_correlation;
+   
+   function gsl_stats_spearman"This function computes the Spearman rank correlation coefficient between the datasets data1 and data2
+   which must both be of the same length n. Additional workspace of size 2 * n is required in work. The
+   Spearman rank correlation between vectors x and y is equivalent to the Pearson correlation between the ranked
+   vectors x R and y R , where ranks are defined to be the average of the positions of an element in the ascending
+   order of the values."
+   input Real data1[:];
+   input Integer stride1;
+   input Real data2[:];
+   input Integer stride2;
+   input Integer n;
+   output Real work[2*n];
+   output Real y;
+   external "C" y=gsl_stats_spearman(data1,stride1,data2,stride2,n,work)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_spearman;
+   end chap_21_6;
+   package chap_21_7"Weighted Samples"
+   function gsl_stats_wmean"This functiton finds the weighted mean given the weight array,  stride of the weight ,data ,its stride and length of the data "
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n; 
+   output Real wmean;
+   external "C" wmean=gsl_stats_wmean(w,wstride,data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_wmean;
+   
+   function gsl_stats_wvariance"This functiton finds the weighted variance given the weight array,  stride of the weight ,data ,its stride and length of the data"
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n; 
+   output Real wvariance;
+   external "C" wvariance=gsl_stats_wvariance(w,wstride,data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_wvariance;
+   
+   function gsl_stats_wvariance_m"This functiton finds the weighted variance given the weight array,  stride of the weight ,data ,its stride , length of the data and the weighted mean"
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n; 
+   input Real wmean;
+   output Real wvariance;
+   external "C" wvariance=gsl_stats_wvariance_m(w,wstride,data,stride,n,wmean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   
+   end gsl_stats_wvariance_m;
+    
+    
+    function gsl_stats_wsd"This function calculates the weighted standard deviation given the weight array,stride of the weights,the data set its stride and length of the dataset"
+    input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n; 
+   output Real wsd;
+   external "C" wsd=gsl_stats_wsd(w,wstride,data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+    end gsl_stats_wsd;
+    
+    
+    function gsl_stats_wsd_m"This functiton finds the weighted standard deviation given the weight array,  stride of the weight ,data ,its stride , length of the data and the weighted mean"
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n; 
+   input Real wmean;
+   output Real wsd;
+   external "C" wsd=gsl_stats_wsd_m(w,wstride,data,stride,n,wmean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   
+   end gsl_stats_wsd_m;
+   
+   function gsl_stats_wvariance_with_fixed_mean"This function computes an unbiased estimate of the variance of the weighted dataset data when the population
+   mean  of the underlying distribution is known with stride of the dataset and weights known and length of dataset is given "
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   input Real mean;
+   output Real wvariance;
+   external "C" wvariance=gsl_stats_wvariance_with_fixed_mean(w,wstride,data,stride,n,mean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_wvariance_with_fixed_mean;
+   
+   function gsl_stats_wsd_with_fixed_mean"This function computes an unbiased estimate of the standard deviation of the weighted dataset data when the population
+   mean  of the underlying distribution is known with stride of the dataset and weights known,  length of dataset is given "
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   input Real mean;
+   output Real wsd;
+   external "C" wsd=gsl_stats_wsd_with_fixed_mean(w,wstride,data,stride,n,mean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_wsd_with_fixed_mean;
+   
+   function gsl_stats_wtss"this function computes total sum of square about the weighted mean given weight array ,wstride,dataset array, stride,length"
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n; 
+   output Real wtss;
+   external "C" wtss=gsl_stats_wtss(w,wstride,data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_wtss;
+   
+   
+   
+   function gsl_stats_wtss_m"this function computes total sum of square about the weighted mean given weight array ,wstride,dataset array, stride,length and weighted mean"
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   input Real wmean; 
+   output Real wtss;
+   external "C" wtss=gsl_stats_wtss_m(w,wstride,data,stride,n,wmean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_wtss_m;
+   
+   function gsl_stats_wabsdev"This function calculates the weighted absolute deviation given the weight array,stride of the weights,the data set its stride and length of the dataset"
+    input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n; 
+   output Real wabsdev;
+   external "C" wabsdev=gsl_stats_wabsdev(w,wstride,data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+    end gsl_stats_wabsdev;
+    
+    
+    function gsl_stats_wabsdev_m"this function computes weighted absolute deviation about the weighted mean given weight array ,wstride,dataset array, stride,length and weighted mean"
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   input Real wmean; 
+   output Real wabsdev;
+   external "C" wabsdev=gsl_stats_wabsdev_m(w,wstride,data,stride,n,wmean)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_wabsdev_m;
+   
+   
+   
+   function gsl_stats_wskew"This function calculates the weighted skewness given the weight array,stride of the weights,the data set its stride and length of the dataset"
+    input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n; 
+   output Real wskew;
+   external "C" wskew=gsl_stats_wskew(w,wstride,data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+    end gsl_stats_wskew;
+    
+    function gsl_stats_wskew_m_sd "this function computes weighted skewness about the weighted mean given weight array ,wstride,dataset array, stride,length , weighted mean and weighted standard deviation"
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   input Real wmean; 
+   input Real wsd;
+   output Real wskew;
+   external "C" wskew=gsl_stats_wskew_m_sd(w,wstride,data,stride,n,wmean,wsd)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_wskew_m_sd;
+   
+   
+   function gsl_stats_wkurtosis"This function calculates the weighted kurtosis given the weight array,stride of the weights,the data set its stride and length of the dataset"
+    input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n; 
+   output Real wkurtosis;
+   external "C" wkurtosis=gsl_stats_wkurtosis(w,wstride,data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+    end gsl_stats_wkurtosis;
+    
+    
+    function gsl_stats_wkurtosis_m_sd "this function computes weighted kurtosis about the weighted mean given weight array ,wstride,dataset array, stride,length , weighted mean and weighted standard deviation"
+   input Real w[:];
+   input Integer wstride;
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   input Real wmean; 
+   input Real wsd;
+   output Real wkurtosis;
+   external "C" wkurtosis=gsl_stats_wkurtosis_m_sd(w,wstride,data,stride,n,wmean,wsd)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+   end gsl_stats_wkurtosis_m_sd; 
+   
+   
+   
+   end chap_21_7;
+   
+   package chap_21_8"Maximum and Minimum of the dataset"
+   function gsl_stats_max"This function returns the maximum value in a given dataset with stride and length given"
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   output Real max;
+   external "C" max=gsl_stats_max(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_max;
+  
+  
+  
+  function gsl_stats_min"This function returns the maximum value in a given dataset with stride and length given"
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   output Real min;
+   external "C" min=gsl_stats_min(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_min;
+  
+  function gsl_stats_minmax"This function returns the minimum and  maximum value in a given dataset with stride and length given"
+   output Real min;
+   output Real max;
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   external "C" gsl_stats_minmax(min,max,data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_minmax;
+  
+  
+  
+  
+   function gsl_stats_max_index"This function returns index of then maximum value in a given dataset with stride and length given"
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   output Real max_index;
+   external "C" max_index=gsl_stats_max_index(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_max_index;
+  
+  
+   function gsl_stats_min_index"This function returns index of then maximum value in a given dataset with stride and length given"
+   input Real data[:];
+   input Integer stride;
+   input Integer n;
+   output Real min_index;
+   external "C" min_index=gsl_stats_min_index(data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_min_index;
+  
+  
+  function gsl_stats_minmax_index"This function returns the index of  minimum and  maximum value in a given dataset with stride and length given"
+   
+   input Real data[:];
+   input Real stride;
+   input Integer n;
+   output Real min_index;
+   output Real max_index;
+   external "C" gsl_stats_minmax_index(min_index,max_index,data,stride,n)annotation(Include="#include<gsl/gsl_statistics_double.h>",Library="gsl",Library="gslcblas");
+  end gsl_stats_minmax_index;
+  
+   
+   end chap_21_8;
+  
   end STATISTICS;
 
   package Examples
@@ -5185,14 +5623,507 @@ end gsl_sf_bessel_jl_e;
     package statistics
     package chap_21_1
     model gsl_stats_mean
-    parameter Real data[:]={1,2,3,4,5};
+    parameter Real data[:]={6.0,7.0,8.0,9.0,10.0};
     parameter Integer stride=1;
     parameter Integer n=size(data,1);
     Real mean;
     algorithm
-    mean:=gsl.STATISTICS.chap_21_1.gsl_stats_mean(data[:],stride,n);
+    mean:=gsl.STATISTICS.chap_21_1.gsl_stats_mean(data,stride,n);
     end gsl_stats_mean;
+    
+    model gsl_stats_variance
+    "In this model we call the function gsl_stats_variance in gsl.STATISTICS.chap_21_1 to calculate variance of data set 'data'"
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=2;
+    parameter Integer n=size(data,1);
+    Real variance;
+    algorithm
+    variance:=gsl.STATISTICS.chap_21_1.gsl_stats_variance(data,stride,n);
+    end gsl_stats_variance;
+    
+    model gsl_stats_variance_m "In this model we call the function gsl_stats_variance in gsl.STATISTICS.chap_21_1 to calculate Sampled variance of data set 'data' and given mean  and stride "
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=2;
+    parameter Integer n=size(data,1);
+    parameter Real mean=2;
+    Real variance_m"Sampled variance";
+    algorithm
+    variance_m:=gsl.STATISTICS.chap_21_1.gsl_stats_variance_m(data,stride,n,mean);
+    end gsl_stats_variance_m;
+    
+    model gsl_stats_sd
+    "In this model we call the function gsl_stats_sd in gsl.STATISTICS.chap_21_1 to calculate Standard deviation of data set 'data'"
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=2;
+    parameter Integer n=size(data,1);
+    Real sd;
+    algorithm
+    sd:=gsl.STATISTICS.chap_21_1.gsl_stats_sd(data,stride,n);
+    end gsl_stats_sd;
+    
+    model gsl_stats_sd_m "In this model we call the function gsl_stats_sd_m in gsl.STATISTICS.chap_21_1 to calculate Sampled standard deviation of data set 'data' and given mean  and stride "
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=2;
+    parameter Integer n=size(data,1);
+    parameter Real mean=2;
+    Real sd_m"Sampled standard deviation";
+    algorithm
+    sd_m:=gsl.STATISTICS.chap_21_1.gsl_stats_sd_m(data,stride,n,mean);
+    end gsl_stats_sd_m;
+    
+    model gsl_stats_tss
+    "In this model we call the function gsl_stats_tss in gsl.STATISTICS.chap_21_1 to calculate total sum of squares of data set about mean"
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=2;
+    parameter Integer n=size(data,1);
+    Real tss"total sum of squares";
+    algorithm
+    tss:=gsl.STATISTICS.chap_21_1.gsl_stats_tss(data,stride,n);
+    end gsl_stats_tss;
+    
+    model gsl_stats_tss_m " This model  calls the function gsl_stats_m  to calculate Sampled total sum of squares of data set 'data' and given mean  and stride "
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=2;
+    parameter Integer n=size(data,1);
+    parameter Real mean=2;
+    Real tss_m"total sum of squares";
+    algorithm
+    tss_m:=gsl.STATISTICS.chap_21_1.gsl_stats_tss_m(data,stride,n,mean);
+    end gsl_stats_tss_m;
+    
+    model gsl_stats_variance_with_fixed_mean"This model calls the function gsl_stats_variance_with_fixed_mean to calculate the variance with the mean known a priori"
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=2;
+    parameter Integer n=size(data,1);
+    parameter Real mean=2;
+    Real variance"Sampled variance";
+    algorithm
+    variance:=gsl.STATISTICS.chap_21_1.gsl_stats_variance_with_fixed_mean(data,stride,n,mean);
+    end gsl_stats_variance_with_fixed_mean;
+    
+    model gsl_stats_sd_with_fixed_mean"This model calls the function gsl_stats_sd_with_fixed_mean to calculate the standard deviation with the mean known a priori"
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=2;
+    parameter Integer n=size(data,1);
+    parameter Real mean=2;
+    Real sd"Standard Deviation";
+    algorithm
+    sd:=gsl.STATISTICS.chap_21_1.gsl_stats_sd_with_fixed_mean(data,stride,n,mean);
+    end gsl_stats_sd_with_fixed_mean;
+    
+    
     end chap_21_1;
+     
+     package chap_21_2
+     model gsl_stats_absdev"This model calls the function gsl_stats_absdev to calculate the absolute deviation of the given data set ,stride and length"
+     parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+     parameter Integer stride=1;
+     parameter Integer n=size(data, 1);
+     Real absdev;
+     algorithm
+     absdev:=gsl.STATISTICS.chap_21_2.gsl_stats_absdev(data,stride,n);
+     end gsl_stats_absdev; 
+     
+     model gsl_stats_absdev_m"This model calls the function
+     gsl_stats_absdev_m to calculate absolute deviation with given mean ,data set,stride and length"
+     parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+     parameter Integer stride=1;
+     parameter Integer n=size(data, 1);
+     parameter Real mean=2;
+     Real absdev_m;
+     algorithm
+     absdev_m:=gsl.STATISTICS.chap_21_2.gsl_stats_absdev_m(data,stride,n,mean);
+     end gsl_stats_absdev_m;
+    
+     end chap_21_2;
+     package chap_21_3
+     model gsl_stats_skew"model calls the function
+     gsl_stats_skew to calculate skewness with given data set,stride and length"
+     parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+     parameter Integer stride=1;
+     parameter Integer n=size(data, 1);
+     Real skew;
+     algorithm
+     skew:=gsl.STATISTICS.chap_21_3.gsl_stats_skew(data,stride,n); 
+     end gsl_stats_skew;
+     
+     model gsl_stats_skew_m_sd"This model calls the function gsl_stats_skew_m_sd to calculate the skewness given the dataset,stride,length,mean and standard deviation"
+     parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+     parameter Integer stride=2;
+     parameter Integer n=size(data, 1);
+     parameter Real mean=1.8;
+     parameter Real sd=2.16795;
+     Real skew;
+     algorithm
+     skew:=gsl.STATISTICS.chap_21_3.gsl_stats_skew_m_sd(data,stride,n,mean,sd);
+     end gsl_stats_skew_m_sd;
+     
+     
+     model gsl_stats_kurtosis"model calls the function
+     gsl_stats_kurtosis to calculate kurtosis with given data set,stride and length"
+     parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+     parameter Integer stride=2;
+     parameter Integer n=size(data, 1);
+     Real kurtosis;
+     algorithm
+     kurtosis:=gsl.STATISTICS.chap_21_3.gsl_stats_kurtosis(data,stride,n); 
+     end gsl_stats_kurtosis;
+     
+     
+     model gsl_stats_kurtosis_m_sd"This model calls the function gsl_stats_kurtosis_m_sd to calculate the kurtosis given the dataset,stride,length,mean and standard deviation"
+     parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+     parameter Integer stride=2;
+     parameter Integer n=size(data, 1);
+     parameter Real mean=1.8;
+     parameter Real sd=2.16795;
+     Real kurtosis;
+     algorithm
+     kurtosis:=gsl.STATISTICS.chap_21_3.gsl_stats_skew_m_sd(data,stride,n,mean,sd);
+     end gsl_stats_kurtosis_m_sd;
+     end chap_21_3;
+     package chap_21_4
+     model gsl_stats_lag1_autocorrelation
+    "In this model we call the function gsl_stats_lag1_autocorrelationin  to calculate lag1 autocorrelation of data set 'data'"
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=2;
+    parameter Integer n=size(data,1);
+    Real lag1;
+    algorithm
+    lag1:=gsl.STATISTICS.chap_21_4.gsl_stats_lag1_autocorrelation(data,stride,n);
+    end gsl_stats_lag1_autocorrelation;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    model gsl_stats_lag1_autocorrelation_m
+    "In this model we call the function gsl_stats_lag1_autocorrelationin_m  to calculate lag1 autocorrelation of data set 'data'given stride,length and mean"
+    parameter Real data[:]={1.0,2.0,3.0,4.0,5.0};
+    parameter Integer stride=1;
+    parameter Integer n=size(data,1);
+    parameter Real mean=1.8;
+    Real lag1;
+    algorithm
+    lag1:=gsl.STATISTICS.chap_21_4.gsl_stats_lag1_autocorrelation_m(data,stride,n,mean);
+    end gsl_stats_lag1_autocorrelation_m;
+     end chap_21_4;
+     package chap_21_5
+      model gsl_stats_covariance"This model calls the function gsl_stats_covariance to compute the covariance of the data-sets data1 and data2 ,stride1 and stride2 and length n"
+      parameter Real data1[:]={1.0,2.0,3.0,4.0,5.0};
+      parameter Integer stride1=1;
+      parameter Real data2[:]={6.0,7.0,8.0,9.0,10.0};
+      parameter Integer stride2=1;
+      parameter Integer n=5;
+      Real covar;
+      algorithm
+      covar:=gsl.STATISTICS.chap_21_5.gsl_stats_covariance(data1,stride1,data2,stride2,n);
+      end gsl_stats_covariance;
+      
+      model gsl_stats_covariance_m"This model calls the function gsl_stats_covariance_m to compute the covariance of the data-sets data1 and data2 ,stride1 and stride2 and length n and mean1 and mean2"
+      parameter Real data1[:]={1.0,2.0,3.0,4.0,5.0};
+      parameter Integer stride1=1;
+      parameter Real data2[:]={6.0,7.0,8.0,9.0,10.0};
+      parameter Integer stride2=1;
+      parameter Integer n=5;
+      parameter Real mean1=3;
+      parameter Real mean2=8;
+      Real covar;
+      algorithm
+      covar:=gsl.STATISTICS.chap_21_5.gsl_stats_covariance_m(data1,stride1,data2,stride2,n,mean1,mean2);
+      end gsl_stats_covariance_m;
+    
+     end chap_21_5;
+     package chap_21_6
+     model gsl_stats_correlation"This model calls the function gsl_stats_correlation to compute the Pearson correlation coefficient of the data-sets data1 and data2 ,stride1 and stride2 and length n"
+      parameter Real data1[:]={1.0,2.0,3.0,4.0,5.0};
+      parameter Integer stride1=1;
+      parameter Real data2[:]={6.0,7.0,8.0,9.0,10.0};
+      parameter Integer stride2=1;
+      parameter Integer n=5;
+      Real r;
+      algorithm
+      r:=gsl.STATISTICS.chap_21_6.gsl_stats_correlation(data1,stride1,data2,stride2,n);
+      end gsl_stats_correlation;
+      
+      model gsl_stats_spearman"This model calls the function gsl_stats_spearman to calculate the spearmans coefficient"
+      parameter Real data1[:]={1.0,2.0,3.0,5.0,4.0};
+      parameter Integer stride1=1;
+      parameter Real data2[:]={6.0,7.0,8.0,9.0,1.0};
+      parameter Integer stride2=1;
+      parameter Integer n=5;
+      Real work[2*n];
+      Real y;
+      algorithm
+      (work,y):=gsl.STATISTICS.chap_21_6.gsl_stats_spearman(data1,stride1,data2,stride2,n);
+      end gsl_stats_spearman;
+     end chap_21_6;
+     package chap_21_7
+     model gsl_stats_wmean
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     Real wmean;
+     algorithm
+     (wmean):=gsl.STATISTICS.chap_21_7.gsl_stats_wmean(w,wstride,data,stride,n);
+     end gsl_stats_wmean;
+     
+     
+     
+     
+     
+     
+     model gsl_stats_wvariance"This model calls the function gsl_stats_wvariance to calculate the weighted variance given the weights ,stride of weights,data, stride of data ,length of the data"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     Real wvariance;
+     algorithm
+     wvariance:=gsl.STATISTICS.chap_21_7.gsl_stats_wvariance(w,wstride,data,stride,n);
+     end gsl_stats_wvariance;
+     
+     
+     model gsl_stats_wvariance_m"This model calls the function gsl_stats_wvariance to calculate the weighted variance given the weights ,stride of weights,data, stride of data ,length of the data and weighted mean"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     parameter Real wmean=1;
+     Real wvariance;
+     algorithm
+     wvariance:=gsl.STATISTICS.chap_21_7.gsl_stats_wvariance_m(w,wstride,data,stride,n,wmean);
+     end gsl_stats_wvariance_m;
+     
+     model gsl_stats_wsd"This model calls the function gsl_stats_wsd to calculate the weighted standard deviation given the weights ,stride of weights,data, stride of data ,length of the data"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     Real wsd;
+     algorithm
+     wsd:=gsl.STATISTICS.chap_21_7.gsl_stats_wsd(w,wstride,data,stride,n);
+     end gsl_stats_wsd;
+     
+     
+     model gsl_stats_wsd_m"This model calls the function gsl_stats_wsd_m to calculate the weighted standard deviation given the weights ,stride of weights,data, stride of data ,length of the data and weighted mean"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     parameter Real wmean=1;
+     Real wsd;
+     algorithm
+     wsd:=gsl.STATISTICS.chap_21_7.gsl_stats_wsd_m(w,wstride,data,stride,n,wmean);
+     end gsl_stats_wsd_m;
+     
+     
+     
+     model gsl_stats_wvariance_with_fixed_mean"This model calls the function gsl_stats_wvariance_with_fixed_mean to calculate the weighted variance given the weights ,stride of weights,data, stride of data ,length of the data and population mean"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     parameter Real mean=1;
+     Real wvariance;
+     algorithm
+     wvariance:=gsl.STATISTICS.chap_21_7.gsl_stats_wvariance_with_fixed_mean(w,wstride,data,stride,n,mean);
+     end gsl_stats_wvariance_with_fixed_mean;
+     
+     
+     
+     
+     
+     model gsl_stats_wsd_with_fixed_mean"This model calls the function gsl_stats_wsd_with_fixed_mean to calculate the weighted variance given the weights ,stride of weights,data, stride of data ,length of the data and population mean"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     parameter Real mean=1;
+     Real wsd;
+     algorithm
+     wsd:=gsl.STATISTICS.chap_21_7.gsl_stats_wsd_with_fixed_mean(w,wstride,data,stride,n,mean);
+     end gsl_stats_wsd_with_fixed_mean;
+     
+     
+     model gsl_stats_wtss"This model calls the function gsl_stats_wtss to calculate the total sum of squares about weighted mean given the weights ,stride of weights,data, stride of data ,length of the data"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     Real wtss;
+     algorithm
+     wtss:=gsl.STATISTICS.chap_21_7.gsl_stats_wtss(w,wstride,data,stride,n);
+     end gsl_stats_wtss;
+     
+     
+     
+     model gsl_stats_wtss_m"This model calls the function gsl_stats_wtss_m to calculate the total sum of squares about weighted mean given the weights ,stride of weights,data, stride of data ,length of the data,weighted mean 'wmean'"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     parameter Real wmean=1;
+     Real wtss;
+     algorithm
+     wtss:=gsl.STATISTICS.chap_21_7.gsl_stats_wtss_m(w,wstride,data,stride,n,wmean);
+     end gsl_stats_wtss_m;
+     
+     
+     model gsl_stats_wabsdev"This model calls the function gsl_stats_wabsdev to calculate the weighted absolute deviation given the weights ,stride of weights,data, stride of data ,length of the data"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     Real wabsdev;
+     algorithm
+     wabsdev:=gsl.STATISTICS.chap_21_7.gsl_stats_wabsdev(w,wstride,data,stride,n);
+     end gsl_stats_wabsdev;
+     
+     model gsl_stats_wabsdev_m"This model calls the function gsl_stats_wabsdev_m to calculate the weighted absolute deviation about weighted mean given the weights ,stride of weights,data, stride of data ,length of the data,weighted mean 'wmean'"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     parameter Real wmean=1;
+     Real wabsdev;
+     algorithm
+     wabsdev:=gsl.STATISTICS.chap_21_7.gsl_stats_wabsdev_m(w,wstride,data,stride,n,wmean);
+     end gsl_stats_wabsdev_m;
+     
+     model gsl_stats_wskew"This model calls the function gsl_stats_wskew to calculate the weighted skewness given the weights ,stride of weights,data, stride of data ,length of the data"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     Real wskew;
+     algorithm
+     wskew:=gsl.STATISTICS.chap_21_7.gsl_stats_wskew(w,wstride,data,stride,n);
+     end gsl_stats_wskew;
+     
+     
+     
+     model gsl_stats_wskew_m_sd"This model calls the function gsl_stats_wskew_m_sd to calculate the skewness about weighted mean given the weights ,stride of weights,data, stride of data ,length of the data,weighted mean 'wmean',weighted standard deviation"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     parameter Real wmean=1;
+     parameter Real wsd=0;
+     Real wskew;
+     algorithm
+     wskew:=gsl.STATISTICS.chap_21_7.gsl_stats_wskew_m_sd(w,wstride,data,stride,n,wmean,wsd);
+     end gsl_stats_wskew_m_sd;
+     
+     
+     model gsl_stats_wkurtosis"This model calls the function gsl_stats_wkurtosis to calculate the weighted kurtosis given the weights ,stride of weights,data, stride of data ,length of the data"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     Real wkurtosis;
+     algorithm
+     wkurtosis:=gsl.STATISTICS.chap_21_7.gsl_stats_wkurtosis(w,wstride,data,stride,n);
+     end gsl_stats_wkurtosis;
+     
+     model gsl_stats_wkurtosis_m_sd"This model calls the function gsl_stats_wkurtosis_m_sd to calculate the weighted kurtosis about weighted mean given the weights ,stride of weights,data, stride of data ,length of the data,weighted mean 'wmean',weighted standard deviation"
+     parameter Real w[:]={0.2,0.2,0.2,0.2,0.2} ;
+     parameter Integer wstride=1;
+     parameter Real data[:]={1.0,1.0,1.0,1.0,1.0};
+     parameter Integer stride=1;
+     parameter Integer n=5;
+     parameter Real wmean=1;
+     parameter Real wsd=0;
+     Real wkurtosis;
+     algorithm
+     wkurtosis:=gsl.STATISTICS.chap_21_7.gsl_stats_wkurtosis_m_sd(w,wstride,data,stride,n,wmean,wsd);
+     end gsl_stats_wkurtosis_m_sd;
+     
+     end chap_21_7;
+     
+     package chap_21_8
+     model gsl_stats_max"This model calls the function gsl_stats_max to return the maximum of the given dataset"
+    parameter Real data[:]={6.0,7.0,8.0,9.0,10.0};
+    parameter Integer stride=1;
+    parameter Integer n=size(data,1);
+    Real max;
+    algorithm
+    max:=gsl.STATISTICS.chap_21_8.gsl_stats_max(data,stride,n);
+    end gsl_stats_max;
+    
+    
+    model gsl_stats_min"This model calls the function gsl_stats_min to return the maximum of the given dataset"
+    parameter Real data[:]={6.0,7.0,8.0,9.0,10.0};
+    parameter Integer stride=1;
+    parameter Integer n=size(data,1);
+    Real min;
+    algorithm
+    min:=gsl.STATISTICS.chap_21_8.gsl_stats_min(data,stride,n);
+    end gsl_stats_min;
+    
+    
+    model gsl_stats_minmax"This model calls the function gsl_stats_minmax to return the maximum of the given dataset"
+    Real min;
+    Real max;
+    parameter Real data[:]={6.0,7.0,8.0,9.0,10.0};
+    parameter Integer stride=1;
+    parameter Integer n=size(data,1);
+    algorithm
+    (min,max):=gsl.STATISTICS.chap_21_8.gsl_stats_minmax(data,stride,n);
+    end gsl_stats_minmax;
+    
+    
+    model gsl_stats_max_index"This model calls the function gsl_stats_max_index to return index of then maximum value of the given dataset"
+    parameter Real data[:]={6.0,7.0,8.0,9.0,10.0};
+    parameter Integer stride=1;
+    parameter Integer n=size(data,1);
+    Real max_index;
+    algorithm
+    max_index:=gsl.STATISTICS.chap_21_8.gsl_stats_max_index(data,stride,n)+1;
+    end gsl_stats_max_index;
+    
+    model gsl_stats_min_index"This model calls the function gsl_stats_min_index to return index of then minimum value of the given dataset"
+    parameter Real data[:]={6.0,7.0,8.0,9.0,10.0};
+    parameter Integer stride=1;
+    parameter Integer n=size(data,1);
+    Real min_index;
+    algorithm
+    min_index:=gsl.STATISTICS.chap_21_8.gsl_stats_min_index(data,stride,n)+1;
+    end gsl_stats_min_index;
+    
+    
+    model gsl_stats_minmax_index"This model calls the function gsl_stats_minmax_index to return the index of  maximum and minimum of the given dataset"
+    
+    parameter Real data[:]={100.0,7.0,8.0,9.0,10.0};
+    parameter Real stride=1;
+    parameter Integer n=size(data,1);
+    Real min_index;
+    Real max_index;
+    algorithm
+    (min_index,max_index):=gsl.STATISTICS.chap_21_8.gsl_stats_minmax_index(data,stride,n);
+    end gsl_stats_minmax_index;
+     end chap_21_8;
+    
+    
     end statistics;
   end Examples;
 end gsl;
