@@ -3543,6 +3543,348 @@ end gsl_sf_bessel_jl_e;
    end chap_21_8;
   
   end STATISTICS;
+package chap_21_9
+      function gsl_stats_median_from_sorted_data "given the sorted dataset  ,stride and the length the function computes the median"
+        input Real sorted_data[:];
+        input Integer stride;
+        input Integer n;
+        output Real median;
+      
+        external "C" median = gsl_stats_median_from_sorted_data(sorted_data, stride, n) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_median_from_sorted_data;
+
+      function gsl_stats_median "This function computes the median given dataset,stride and length"
+        input Real data[:];
+        input Integer stride;
+        input Integer n;
+        output Real median;
+      
+        external "C" median = gsl_stats_median(data, stride, n) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_median;
+
+      function gsl_stats_quantile_from_sorted_data "given the sorted dataset  ,stride and the length and the function computes the quantile"
+        input Real sorted_data[:];
+        input Integer stride;
+        input Integer n;
+        input Real f "percentile/100";
+        output Real quantile;
+      
+        external "C" quantile = gsl_stats_quantile_from_sorted_data(sorted_data, stride, n, f) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_quantile_from_sorted_data;
+    end chap_21_9;
+
+    package chap_21_10
+      function gsl_stats_select "This function returns the kth order statistics (kth smallest value) of a given dataset"
+        input Real data[:];
+        input Integer stride;
+        input Integer n;
+        input Integer k;
+        output Real d;
+      
+        external "C" d = gsl_stats_select(data, stride, n, k) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_select;
+    end chap_21_10;
+
+    package chap_21_11 "Robust location estimates "
+      function gsl_stats_trmean_from_sorted_data "This function returns the trimmed mean given sorted data set, trimming factor, stride and length"
+        input Real alpha;
+        input Real sorted_data[:];
+        input Integer stride;
+        input Integer n;
+        output Real trmean;
+      
+        external "C" trmean = gsl_stats_trmean_from_sorted_data(alpha, sorted_data, stride, n) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_trmean_from_sorted_data;
+
+      function gsl_stats_gastwirth_from_sorted_data "gastwirth=(0.3*Q1/2)+(0.4*Q1/2)+(0.3*Q2/3) where Q1/3 is one third quantile,Q1/2 is half quantile and Q2/3 is two third quantile"
+        input Real sorted_data[:];
+        input Integer stride;
+        input Integer n;
+        output Real gastwirth;
+      
+        external "C" gastwirth = gsl_stats_gastwirth_from_sorted_data(sorted_data, stride, n) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_gastwirth_from_sorted_data;
+    end chap_21_11;
+
+    package chap_21_12_1
+      function gsl_stats_mad0 "The function calculates median absolute deviation(MAD),where MAD0=median{|xi- median(x)|} given dataset ,stride,length and a workspace of size n"
+        input Real data[:];
+        input Integer stride;
+        input Integer n;
+        output Real work[n];
+        output Real mad0;
+      
+        external "C" mad0 = gsl_stats_mad0(data, stride, n, work) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_mad0;
+
+      function gsl_stats_mad "The function calculates median absolute deviation(MAD),where MAD=1.4826*median{|xi- median(x)|} given dataset ,stride,length and a workspace of size n"
+        input Real data[:];
+        input Integer stride;
+        input Integer n;
+        output Real work[n];
+        output Real mad;
+      
+        external "C" mad = gsl_stats_mad(data, stride, n, work) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_mad;
+    end chap_21_12_1;
+
+    package chap_21_12_2 "Sn Statistic"
+      function gsl_stats_Sn0_from_sorted_data "This function returns the statistics given sorted data set, workspace of length n , stride and length.where S n =  c n × median i {median j (|x i − x j |)}"
+        input Real sorted_data[:];
+        input Integer stride;
+        input Integer n;
+        output Real work[n];
+        output Real Sn0;
+      
+        external "C" Sn0 = gsl_stats_Sn0_from_sorted_data(sorted_data, stride, n, work) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_Sn0_from_sorted_data;
+
+      function gsl_stats_Sn_from_sorted_data "This function returns the statistics given sorted data set, workspace of length n , stride and length.where S n =1.1926× cn × median i {median j (|x i − x j |)}"
+        input Real sorted_data[:];
+        input Integer stride;
+        input Integer n;
+        output Real work[n];
+        output Real Sn;
+      
+        external "C" Sn = gsl_stats_Sn_from_sorted_data(sorted_data, stride, n, work) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_Sn_from_sorted_data;
+    end chap_21_12_2;
+
+    package chap_21_12_3
+      function gsl_stats_Qn0_from_sorted_data "This function returns the statistics given sorted data set, workspace of length n , stride and length.where Q n 0=  d n × {|x i − x j | , i < j} (k)"
+        input Real sorted_data[:];
+        input Integer stride;
+        input Integer n;
+        output Real work[3 * n];
+        output Integer work_int[5 * n];
+        output Real Qn0;
+      
+        external "C" Qn0 = gsl_stats_Qn0_from_sorted_data(sorted_data, stride, n, work, work_int) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_Qn0_from_sorted_data;
+
+      function gsl_stats_Qn_from_sorted_data "This function returns the statistics given sorted data set, workspace of length n , stride and length.where Q n = 2.21914 × d n × {|x i − x j | , i < j} (k)"
+        input Real sorted_data[:];
+        input Integer stride;
+        input Integer n;
+        output Real work[3 * n];
+        output Integer work_int[5 * n];
+        output Real Qn;
+      
+        external "C" Qn = gsl_stats_Qn_from_sorted_data(sorted_data, stride, n, work, work_int) annotation(
+          Include = "#include<gsl/gsl_statistics_double.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_stats_Qn_from_sorted_data;
+    end chap_21_12_3;
+  end STATISTICS;
+
+  package RUNNING_STATISTICS
+    package chap_22_2
+      function gsl_rstat_reset "resets the accumulator so that it can be used for other data"
+        input gsl.data_types.gsl_rstat_workspace p;
+        output Integer n;
+      
+        external "C" n = gsl_rstat_reset(p) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_reset;
+
+      function gsl_rstat_add "adds data to the accumulator"
+        input Real x;
+        input gsl.data_types.gsl_rstat_workspace S;
+        output Integer i;
+      
+        external "C" i = gsl_rstat_add(x, S) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_add;
+
+      function gsl_rstat_n "returns the number of data accumulated in the accumulator"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Integer n;
+      
+        external "C" n = gsl_rstat_n(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_n;
+    end chap_22_2;
+
+    package chap_22_3
+      function gsl_rstat_min "returns the minimum value added to the accumulator"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_min(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_min;
+
+      function gsl_rstat_max "returns the minimum value added to the accumulator"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_max(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_max;
+
+      function gsl_rstat_mean "returns the maximum value added to the accumulator"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_mean(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_mean;
+
+      function gsl_rstat_variance "returns the variance of the accumulator data"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_variance(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_variance;
+
+      function gsl_rstat_sd "returns the standard deviation of accumulator"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_sd(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_sd;
+
+      function gsl_rstat_sd_mean "This function returns the standard deviation of the mean,"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_sd_mean(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_sd_mean;
+
+      function gsl_rstat_rms "This function returns the root mean square of all data added to the accumulator"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_rms(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_rms;
+
+      function gsl_rstat_skew "This function returns the skewness of all data added to the accumulator"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_skew(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_skew;
+
+      function gsl_rstat_kurtosis "This function returns the kurtosis of all data added to the accumulator"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_kurtosis(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_kurtosis;
+
+      function gsl_rstat_median "This function returns an estimate of the median of the data added to the accumulator"
+        input gsl.data_types.gsl_rstat_workspace w;
+        output Real n;
+      
+        external "C" n = gsl_rstat_median(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_median;
+    end chap_22_3;
+
+    package chap_22_4
+      function gsl_rstat_quantile_reset "resets the accumulator so that it can be used for other data"
+        input gsl.data_types.gsl_rstat_quantile_workspace w;
+        output Integer n;
+      
+        external "C" n = gsl_rstat_quantile_reset(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_quantile_reset;
+
+      function gsl_rstat_quantile_add "adds data to the accumulator"
+        input Real x;
+        input gsl.data_types.gsl_rstat_quantile_workspace S;
+        output Integer i;
+      
+        external "C" i = gsl_rstat_quantile_add(x, S) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_quantile_add;
+
+      function gsl_rstat_quantile_get "returns the number of data accumulated in the accumulator"
+        input gsl.data_types.gsl_rstat_quantile_workspace w;
+        output Integer n;
+      
+        external "C" n = gsl_rstat_quantile_get(w) annotation(
+          Include = "#include<gsl/gsl_rstat.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end gsl_rstat_quantile_get;
+    end chap_22_4;
+  end RUNNING_STATISTICS;
+
+  package MOVING_WINDOW_STATISTICS
+  end MOVING_WINDOW_STATISTICS;
+
+
 
   package Examples
     package Mathematical
@@ -6125,5 +6467,158 @@ end gsl_sf_bessel_jl_e;
     
     
     end statistics;
+package chap_21_9 "Median and Percentiles"
+        model gsl_stats_median_from_sorted_data "This model calls the function 'gsl_stats_median_from_sorted_data' to calculate the median .  The given dataset should be in asending order"
+          parameter Real sorted_data[:] = {1, 2, 4, 5, 7, 9};
+          parameter Integer stride = 1;
+          parameter Integer n = size(sorted_data, 1);
+          Real median;
+        algorithm
+          median := gsl.STATISTICS.chap_21_9.gsl_stats_median_from_sorted_data(sorted_data, stride, n);
+        end gsl_stats_median_from_sorted_data;
+
+        model gsl_stats_median "This model calls the function 'gsl_stats_median' to calculate the median"
+          parameter Real data[:] = {1, 2, 4, 5, 7, 9};
+          parameter Integer stride = 1;
+          parameter Integer n = size(data, 1);
+          Real median;
+        algorithm
+          median := gsl.STATISTICS.chap_21_9.gsl_stats_median(data, stride, n);
+        end gsl_stats_median;
+
+        model gsl_stats_quantile_from_sorted_data "This model calls the function 'gsl_stats_quantile_from_sorted_data' to calculate the quantile .  The given dataset should be in asending order"
+          parameter Real sorted_data[:] = {1, 2, 4, 5, 7, 9};
+          parameter Integer stride = 1;
+          parameter Integer n = size(sorted_data, 1);
+          parameter Real f = 0.75 "percentile/100";
+          Real quantile;
+        algorithm
+          quantile := gsl.STATISTICS.chap_21_9.gsl_stats_quantile_from_sorted_data(sorted_data, stride, n, f);
+        end gsl_stats_quantile_from_sorted_data;
+      end chap_21_9;
+
+      package chap_21_10
+        model gsl_stats_select "This model calls the function gsl_stats_select to  give the kth smallest   value of the given dataset"
+          Real data[:] = {4, 2, 3, 1, 1000, 10, 9};
+          parameter Integer stride = 1;
+          parameter Integer n = size(data, 1);
+          parameter Integer k = 5;
+          Real d;
+        algorithm
+          d := gsl.STATISTICS.chap_21_10.gsl_stats_select(data, stride, n, k - 1);
+        end gsl_stats_select;
+      end chap_21_10;
+
+      package chap_21_11
+        model gsl_stats_trmean_from_sorted_data "This model calls the function 'gsl_stats_trmean_from_sorted_data' to give the trimmed mean given sorted dataset  trimming factor 'alpha',stride,length"
+          parameter Real alpha = 0.25;
+          parameter Real sorted_data[:] = {1, 2, 3, 4, 5, 6, 7, 8};
+          parameter Integer stride = 1;
+          parameter Integer n = size(sorted_data, 1);
+          Real trmean;
+        algorithm
+          trmean := gsl.STATISTICS.chap_21_11.gsl_stats_trmean_from_sorted_data(alpha, sorted_data, stride, n);
+        end gsl_stats_trmean_from_sorted_data;
+
+        model gsl_stats_gastwirth_from_sorted_data "This model calls the function 'gsl_stats_gastwirth_from_sorted_data' to give gastwirth location estimator given sorted data,stride ,length"
+          parameter Real sorted_data[:] = {1000, 2, 3, 1000, 5, 1000, 7, 1000};
+          parameter Integer stride = 1;
+          parameter Integer n = size(sorted_data, 1);
+          Real gastwirth;
+        algorithm
+          gastwirth := gsl.STATISTICS.chap_21_11.gsl_stats_gastwirth_from_sorted_data(sorted_data, stride, n);
+        end gsl_stats_gastwirth_from_sorted_data;
+      end chap_21_11;
+
+      package chap_21_12_1
+        model gsl_stats_mad0 "This model calls the function gsl_stats_mad0 to calculate median absolute deviation(MAD) without the correction factor "
+          parameter Real data[:] = {1, 34, 6, 5, 9};
+          parameter Integer stride = 1;
+          parameter Integer n = size(data, 1);
+          Real work[size(data, 1)];
+          Real mad0;
+        algorithm
+          (work, mad0) := gsl.STATISTICS.chap_21_12_1.gsl_stats_mad0(data, stride, n);
+        end gsl_stats_mad0;
+
+        model gsl_stats_mad "This model calls the function gsl_stats_mad to calculate median absolute deviation(MAD) "
+          parameter Real data[:] = {1, 34, 6, 5, 9};
+          parameter Integer stride = 1;
+          parameter Integer n = size(data, 1);
+          Real work[size(data, 1)];
+          Real mad;
+        algorithm
+          (work, mad) := gsl.STATISTICS.chap_21_12_1.gsl_stats_mad(data, stride, n);
+        end gsl_stats_mad;
+      end chap_21_12_1;
+
+      package chap_21_12_2 "Sn Statistic"
+        model gsl_stats_Sn0_from_sorted_data "This model calls the function 'gsl_stats_Sn0_from_sorted_data' to give the Statistics given sorted dataset , workspace of length n,stride,length"
+          parameter Real sorted_data[:] = {1, 2, 3, 4, 5, 6, 7, 8};
+          parameter Integer stride = 1;
+          parameter Integer n = size(sorted_data, 1);
+          Real work[size(sorted_data, 1)];
+          Real Sn0;
+        algorithm
+          (work, Sn0) := gsl.STATISTICS.chap_21_12_2.gsl_stats_Sn0_from_sorted_data(sorted_data, stride, n);
+        end gsl_stats_Sn0_from_sorted_data;
+
+        model gsl_stats_Sn_from_sorted_data "This model calls the function 'gsl_stats_Sn_from_sorted_data' to give the Statistics given sorted dataset , workspace of length n,stride,length"
+          parameter Real sorted_data[:] = {1, 2, 3, 4, 5, 6, 7, 8};
+          parameter Integer stride = 1;
+          parameter Integer n = size(sorted_data, 1);
+          Real work[size(sorted_data, 1)];
+          Real Sn;
+        algorithm
+          (work, Sn) := gsl.STATISTICS.chap_21_12_2.gsl_stats_Sn_from_sorted_data(sorted_data, stride, n);
+        end gsl_stats_Sn_from_sorted_data;
+      end chap_21_12_2;
+
+      package chap_21_12_3
+        model gsl_stats_Qn0_from_sorted_data "This model calls the function 'gsl_stats_Qn0_from_sorted_data' to give the Statistics given sorted dataset , workspace of length n,stride,length"
+          parameter Real sorted_data[:] = {1, 2, 3, 4, 5, 6, 7, 8};
+          parameter Integer stride = 1;
+          parameter Integer n = size(sorted_data, 1);
+          Real work[3 * size(sorted_data, 1)];
+          Integer work_int[size(sorted_data, 1) * 5];
+          Real Qn0;
+        algorithm
+          (work, work_int, Qn0) := gsl.STATISTICS.chap_21_12_3.gsl_stats_Qn0_from_sorted_data(sorted_data, stride, n);
+        end gsl_stats_Qn0_from_sorted_data;
+
+        model gsl_stats_Qn_from_sorted_data "This model calls the function 'gsl_stats_Qn_from_sorted_data' to give the Statistics given sorted dataset , workspace of length n,stride,length,workspace for integer "
+          parameter Real sorted_data[:] = {1, 2, 3, 4, 5, 6, 7, 8};
+          parameter Integer stride = 1;
+          parameter Integer n = size(sorted_data, 1);
+          Real work[3 * size(sorted_data, 1)];
+          Integer work_int[5 * size(sorted_data, 1)];
+          Real Qn;
+        algorithm
+          (work, work_int, Qn) := gsl.STATISTICS.chap_21_12_3.gsl_stats_Qn_from_sorted_data(sorted_data, stride, n);
+        end gsl_stats_Qn_from_sorted_data;
+      end chap_21_12_3;
+    end statistics;
+
+    package running_statistics
+      model test
+        gsl.data_types.gsl_rstat_workspace rstat_p = gsl.data_types.gsl_rstat_workspace();
+        parameter Real data[:] = {17.2, 18.1};
+        Real mean;
+        //, 16.5, 18.3, 12.6};
+        /* Real mean, variance, largest, smallest, sd, rms, sd_mean, median, skew, kurtosis;*/
+        //Real i;
+        Real j[2];
+      algorithm
+/* add data to rstat accumulator */
+//for i in 1:2 loop
+        j[1] := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_add(data[1], rstat_p);
+        j[2] := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_add(data[2], rstat_p);
+//end for;
+        mean := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_mean(rstat_p);
+//end for;
+// i := 5;
+      end test;
+    end running_statistics;
+
   end Examples;
 end gsl;
