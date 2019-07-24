@@ -6601,23 +6601,30 @@ package chap_21_9 "Median and Percentiles"
 
     package running_statistics
       model test
-        gsl.data_types.gsl_rstat_workspace rstat_p = gsl.data_types.gsl_rstat_workspace();
-        parameter Real data[:] = {17.2, 18.1};
-        Real mean;
-        //, 16.5, 18.3, 12.6};
-        /* Real mean, variance, largest, smallest, sd, rms, sd_mean, median, skew, kurtosis;*/
-        //Real i;
-        Real j[2];
-      algorithm
+  /* this model calculates the mean,variance,largest,smallest,median,sd,sd_mean,skew,rms,kurtosis and n of a given dataset */
+  gsl.data_types.gsl_rstat_workspace rstat_p = gsl.data_types.gsl_rstat_workspace();
+  parameter Real data[:] = {17.2, 18.1, 16.5, 18.3, 12.6};
+  Real mean, variance, largest, smallest, sd, rms, sd_mean, median, skew, kurtosis;
+  Real j[5];
+  Real n;
+algorithm
 /* add data to rstat accumulator */
-//for i in 1:2 loop
-        j[1] := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_add(data[1], rstat_p);
-        j[2] := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_add(data[2], rstat_p);
-//end for;
-        mean := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_mean(rstat_p);
-//end for;
-// i := 5;
-      end test;
+  for i in 1:5 loop
+    j[i] := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_add(data[i], rstat_p);
+  end for;
+  mean := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_mean(rstat_p);
+  variance := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_variance(rstat_p);
+  largest := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_max(rstat_p);
+  smallest := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_min(rstat_p);
+  median := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_median(rstat_p);
+  sd := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_sd(rstat_p);
+  sd_mean := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_sd_mean(rstat_p);
+  skew := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_skew(rstat_p);
+  rms := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_rms(rstat_p);
+  kurtosis := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_kurtosis(rstat_p);
+  n := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_n(rstat_p);
+end test;
+
     end running_statistics;
 
   end Examples;
