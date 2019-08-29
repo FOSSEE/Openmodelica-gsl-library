@@ -6608,21 +6608,25 @@ package chap_21_9 "Median and Percentiles"
   Real j[5];
   Real n;
 algorithm
+// all the equation should run in when statement
 /* add data to rstat accumulator */
-  for i in 1:5 loop
-    j[i] := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_add(data[i], rstat_p);
-  end for;
-  mean := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_mean(rstat_p);
-  variance := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_variance(rstat_p);
-  largest := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_max(rstat_p);
-  smallest := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_min(rstat_p);
-  median := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_median(rstat_p);
-  sd := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_sd(rstat_p);
-  sd_mean := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_sd_mean(rstat_p);
-  skew := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_skew(rstat_p);
-  rms := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_rms(rstat_p);
-  kurtosis := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_kurtosis(rstat_p);
-  n := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_n(rstat_p);
+  when initial() then
+    for i in 1:5 loop
+      j[i] := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_add(data[i], rstat_p);
+    end for;
+  elsewhen terminal() then
+    mean := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_mean(rstat_p);
+    variance := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_variance(rstat_p);
+    largest := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_max(rstat_p);
+    smallest := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_min(rstat_p);
+    median := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_median(rstat_p);
+    sd := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_sd(rstat_p);
+    sd_mean := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_sd_mean(rstat_p);
+    skew := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_skew(rstat_p);
+    rms := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_rms(rstat_p);
+    kurtosis := gsl.RUNNING_STATISTICS.chap_22_3.gsl_rstat_kurtosis(rstat_p);
+    n := gsl.RUNNING_STATISTICS.chap_22_2.gsl_rstat_n(rstat_p);
+  end when;
 end test;
 
     end running_statistics;
