@@ -1,6 +1,77 @@
 package gsl //This Library calls GNU Scientific Library from OpenModelica to compute different functions given in GSL(GNU Scientific Library
 
 package data_types
+        model gsl_multifit_linear_workspace
+      extends ExternalObject;
+
+      function constructor
+        input Integer no_of_elements;
+        input Integer no_of_parameters;
+        output gsl_multifit_linear_workspace work;
+      
+        external "C" work = gsl_multifit_linear_alloc(no_of_elements, no_of_parameters) annotation(
+          Include = "#include<gsl/gsl_multifit.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end constructor;
+
+      function destructor "Release storage of workspace work"
+        input gsl_multifit_linear_workspace work;
+      
+        external "C" gsl_multifit_linear_free(work) annotation(
+          Include = "#include<gsl/gsl_multifit.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end destructor;
+    end gsl_multifit_linear_workspace;
+
+    model gsl_vector
+      extends ExternalObject;
+
+      function constructor
+        input Integer N;
+        output gsl_vector p;
+      
+        external "C" p = gsl_vector_calloc(N) annotation(
+          Include = "#include <gsl/gsl_vector.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end constructor;
+
+      function destructor "Release storage of p"
+        input gsl_vector p;
+      
+        external "C" gsl_vector_free(p) annotation(
+          Include = "#include <gsl/gsl_vector.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end destructor;
+    end gsl_vector;
+
+    model gsl_matrix
+      extends ExternalObject;
+
+      function constructor
+        input Integer N;
+        input Integer a;
+        output gsl_matrix p;
+      
+        external "C" p = gsl_matrix_calloc(N, a) annotation(
+          Include = "#include <gsl/gsl_matrix.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end constructor;
+
+      function destructor "Release storage of p"
+        input gsl_matrix p;
+      
+        external "C" gsl_matrix_free(p) annotation(
+          Include = "#include <gsl/gsl_matrix.h>",
+          Library = "gsl",
+          Library = "gslcblas");
+      end destructor;
+    end gsl_matrix;
+
     model gsl_permutation
       extends ExternalObject;
 
@@ -37,7 +108,44 @@ package data_types
       Integer e10;
     end gsl_sf_result_e10;
   end data_types;
+package LLSF
+    impure function gsl_fit_linear
+      input gsl.data_types.gsl_vector x;
+      input Real xstride;
+      input gsl.data_types.gsl_vector y;
+      input Real ystride;
+      input Integer n;
+      /* coefficients of the model Y=co+c1*X */
+      output Real c0;
+      output Real c1;
+      output Real cov00;
+      output Real cov01;
+      output Real cov11;
+      output Real sumsq;
+      output Integer l;
+    
+      external "C" l = gsl_fit_linear(x, xstride, y, ystride, n, c0, c1, cov00, cov01, cov11, sumsq) annotation(
+        Include = "#include<gsl/gsl_fit.h>",
+        Library = "gsl",
+        Library = "gslcblas");
+    end gsl_fit_linear;
 
+    function gsl_multifit_linear
+      //no of parameter of the curve to be fit
+      input gsl.data_types.gsl_matrix X;
+      input gsl.data_types.gsl_vector y;
+      input gsl.data_types.gsl_vector c;
+      input gsl.data_types.gsl_matrix cov;
+      output Real chisq;
+      input gsl.data_types.gsl_multifit_linear_workspace work;
+      output Integer l;
+    
+      external "C" l = gsl_multifit_linear(X, y, c, cov, chisq, work) annotation(
+        Include = "#include<gsl/gsl_multifit.h>",
+        Library = "gsl",
+        Library = "gslcblas");
+    end gsl_multifit_linear;
+  end LLSF;
   package mathematical
     function gsl_log1p
       //This function computes the value of log(1 + x) in a way that is accurate for small x
@@ -3887,6 +3995,158 @@ package chap_21_9
 
 
   package Examples
+    package Ex_5_1
+      model Ex_5_1b
+        //given the concentration of A(Ca) with corresponding time we find the order of the reaction by first calculating the derivative of concentration of A and then fitting a line through the equation ln(-dCa/dt)= ln(k1)+alpha* ln(Ca) where dCa/dt is calculated using finite difference method
+        /*this model calls the functions gsl_matrix,gsl_vector,gsl_multifit_linear to fit a 5 parameters polynomial fit to given 7 point data*/
+        parameter Integer a = 7;
+        //no of data points
+        parameter Integer p = 2;
+        //no of parameters to be fit
+        gsl.data_types.gsl_matrix X = gsl.data_types.gsl_matrix(a, p);
+        //allocating memory to  the matrix
+        gsl.data_types.gsl_vector y = gsl.data_types.gsl_vector(a);
+        //allocating memory to  the vector
+        gsl.data_types.gsl_vector c = gsl.data_types.gsl_vector(p);
+        //
+        gsl.data_types.gsl_matrix cov = gsl.data_types.gsl_matrix(a, p);
+        //allocating memory to the covariance matrix
+        Real c0 "exp(c1[1])";
+        Real chisq;
+        gsl.data_types.gsl_multifit_linear_workspace work = gsl.data_types.gsl_multifit_linear_workspace(a, p);
+        //allocating memory to the workspace
+        parameter Real delta_time(unit = "time") = 50;
+        //time intervel
+        Integer l;
+        Real dCadt[7](unit = "mol/dm3/min");
+        parameter Real Ca[:] = {50e-3, 38e-3, 30.6e-3, 25.6e-3, 22.2e-3, 19.5e-3, 17.4e-3};
+        //parameter Real y1[:] = {50e-3, 38e-3, 30.6e-3, 25.6e-3, 22.2e-3, 19.5e-3, 17.4e-3};
+        parameter Real x[:, :] = {{1, log(50e-3)}, {1, log(38e-3)}, {1, log(30.6e-3)}, {1, log(25.6e-3)}, {1, log(22.2e-3)}, {1, log(19.5e-3)}, {1, log(17.4e-3)}} "x matrix";
+        Real c1[p] "parameters of best fit";
+      algorithm
+        when initial() then
+          dCadt[1] := ((-3 * Ca[1]) + 4 * Ca[2] - Ca[3]) / (2 * delta_time);
+          dCadt[2] := (Ca[3] - Ca[1]) / (2 * delta_time);
+          dCadt[3] := (Ca[4] - Ca[2]) / (2 * delta_time);
+          dCadt[4] := (Ca[5] - Ca[3]) / (2 * delta_time);
+          dCadt[5] := (Ca[6] - Ca[4]) / (2 * delta_time);
+          dCadt[6] := (Ca[7] - Ca[5]) / (2 * delta_time);
+          dCadt[7] := (Ca[5] - 4 * Ca[6] + 3 * Ca[7]) / (2 * delta_time);
+          for i in 1:a loop
+            for j in 1:p loop
+              gsl.Vectors_and_Matrices.gsl_matrix_set(X, i - 1, j - 1, x[i, j]);
+            end for;
+          end for;
+          for k in 1:a loop
+            gsl.Vectors_and_Matrices.gsl_vector_set(y, k - 1, log(-dCadt[k]));
+          end for;
+        elsewhen terminal() then
+          (chisq, l) := gsl.LLSF.gsl_multifit_linear(X, y, c, cov, work);
+          for k in 1:p loop
+            c1[k] := gsl.Vectors_and_Matrices.gsl_vector_get(c, k - 1);
+            c0 := exp(c1[1]);
+          end for;
+        end when;
+      end Ex_5_1b;
+
+      model Ex_5_1c
+        //given the concentration of A(Ca) with corresponding time we find the order of the reaction by first calculating the derivative of concentration of A and then fitting a line through the equation ln(-dCa/dt)= ln(k1)+alpha* ln(Ca) where dCa/dt is calculated using finite difference method
+        /*this model calls the functions gsl_matrix,gsl_vector,gsl_multifit_linear to fit a 5 parameters polynomial fit to given 7 point data*/
+        Real k1(unit = "dm6/mol3/min") "reaction rate constant";
+        parameter Real cb0(unit = "mol/dm3") = 0.5;
+        parameter Integer a = 7;
+        //no of data points
+        parameter Integer p = 2;
+        //no of parameters to be fit
+        gsl.data_types.gsl_matrix X = gsl.data_types.gsl_matrix(a, p);
+        //allocating memory to  the matrix
+        gsl.data_types.gsl_vector y = gsl.data_types.gsl_vector(a);
+        //allocating memory to  the vector
+        gsl.data_types.gsl_vector c = gsl.data_types.gsl_vector(p);
+        //
+        gsl.data_types.gsl_matrix cov = gsl.data_types.gsl_matrix(a, p);
+        //allocating memory to the covariance matrix
+        Real c0 "ln(k1)";
+        Real chisq;
+        gsl.data_types.gsl_multifit_linear_workspace work = gsl.data_types.gsl_multifit_linear_workspace(a, p);
+        //allocating memory to the workspace
+        parameter Real delta_time(unit = "min") = 50 "time difference between two events";
+        //time intervel
+        Integer l;
+        Real dCadt[7];
+        parameter Real Ca[:](unit = "mol/dm3") = {50e-3, 38e-3, 30.6e-3, 25.6e-3, 22.2e-3, 19.5e-3, 17.4e-3};
+        //parameter Real y1[:] = {50e-3, 38e-3, 30.6e-3, 25.6e-3, 22.2e-3, 19.5e-3, 17.4e-3};
+        parameter Real x[:, :] = {{1, log(50e-3)}, {1, log(38e-3)}, {1, log(30.6e-3)}, {1, log(25.6e-3)}, {1, log(22.2e-3)}, {1, log(19.5e-3)}, {1, log(17.4e-3)}} "x matrix";
+        Real c1[p] "parameter of the best fit";
+      algorithm
+        when initial() then
+          dCadt[1] := ((-3 * Ca[1]) + 4 * Ca[2] - Ca[3]) / (2 * delta_time);
+          dCadt[2] := (Ca[3] - Ca[1]) / (2 * delta_time);
+          dCadt[3] := (Ca[4] - Ca[2]) / (2 * delta_time);
+          dCadt[4] := (Ca[5] - Ca[3]) / (2 * delta_time);
+          dCadt[5] := (Ca[6] - Ca[4]) / (2 * delta_time);
+          dCadt[6] := (Ca[7] - Ca[5]) / (2 * delta_time);
+          dCadt[7] := (Ca[5] - 4 * Ca[6] + 3 * Ca[7]) / (2 * delta_time);
+          for i in 1:a loop
+            for j in 1:p loop
+              gsl.Vectors_and_Matrices.gsl_matrix_set(X, i - 1, j - 1, x[i, j]);
+            end for;
+          end for;
+          for k in 1:a loop
+            gsl.Vectors_and_Matrices.gsl_vector_set(y, k - 1, log(-dCadt[k]));
+          end for;
+        elsewhen terminal() then
+          (chisq, l) := gsl.LLSF.gsl_multifit_linear(X, y, c, cov, work);
+          for k in 1:p loop
+            c1[k] := gsl.Vectors_and_Matrices.gsl_vector_get(c, k - 1);
+            c0 := exp(c1[1]);
+          end for;
+          k1 := c0 / cb0;
+        end when;
+      end Ex_5_1c;
+    end Ex_5_1;
+
+    package LLSF
+      model gsl_multifit_linear
+        /*this model calls the functions gsl_matrix,gsl_vector,gsl_multifit_linear to fit a 5 parameters polynomial fit to given 7 point data*/
+        parameter Integer a = 7;
+        //no of data points
+        parameter Integer p = 5;
+        //no of parameters to be fit
+        gsl.data_types.gsl_matrix X = gsl.data_types.gsl_matrix(a, p);
+        //allocating memory to  the matrix
+        parameter gsl.data_types.gsl_vector y = gsl.data_types.gsl_vector(a);
+        //allocating memory to  the vector
+        parameter gsl.data_types.gsl_vector c = gsl.data_types.gsl_vector(p);
+        //
+        gsl.data_types.gsl_matrix cov = gsl.data_types.gsl_matrix(a, p);
+        //allocating memory to the covariance matrix
+        Real chisq;
+        gsl.data_types.gsl_multifit_linear_workspace work = gsl.data_types.gsl_multifit_linear_workspace(a, p);
+        //allocating memory to the workspace
+        Integer l;
+        parameter Real y1[:] = {50e-3, 38e-3, 30.6e-3, 25.6e-3, 22.2e-3, 19.5e-3, 17.4e-3};
+        parameter Real x[:, :] = {{1, 0, 0, 0, 0}, {1, 50, 50 ^ 2, 50 ^ 3, 50 ^ 4}, {1, 100, 100 ^ 2, 100 ^ 3, 100 ^ 4}, {1, 150, 150 ^ 2, 150 ^ 3, 150 ^ 4}, {1, 200, 200 ^ 2, 200 ^ 3, 200 ^ 4}, {1, 250, 250 ^ 2, 250 ^ 3, 250 ^ 4}, {1, 300, 300 ^ 2, 300 ^ 3, 300 ^ 4}};
+        Real c1[p];
+      algorithm
+        when initial() then
+          for i in 1:a loop
+            for j in 1:p loop
+              gsl.Vectors_and_Matrices.gsl_matrix_set(X, i - 1, j - 1, x[i, j]);
+            end for;
+          end for;
+          for k in 1:a loop
+            gsl.Vectors_and_Matrices.gsl_vector_set(y, k - 1, y1[k]);
+          end for;
+        elsewhen terminal() then
+          (chisq, l) := gsl.LLSF.gsl_multifit_linear(X, y, c, cov, work);
+          for k in 1:p loop
+            c1[k] := gsl.Vectors_and_Matrices.gsl_vector_get(c, k - 1);
+          end for;
+        end when;
+      end gsl_multifit_linear;
+    end LLSF;
+
     package Mathematical
       model gsl_log1p
         //This model computes the value of log(1 + x) in a way that is accurate for small x by calling the function gsl_log1p(x)
